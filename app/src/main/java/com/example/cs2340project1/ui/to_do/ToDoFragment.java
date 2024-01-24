@@ -1,4 +1,4 @@
-package com.example.cs2340project1.ui.notifications;
+package com.example.cs2340project1.ui.to_do;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.cs2340project1.databinding.FragmentNotificationsBinding;
+import com.example.cs2340project1.databinding.FragmentToDoBinding;
 
-public class NotificationsFragment extends Fragment {
+public class ToDoFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentToDoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        ToDoViewModel toDoViewModel =
+                new ViewModelProvider(this).get(ToDoViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentToDoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        toDoViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
