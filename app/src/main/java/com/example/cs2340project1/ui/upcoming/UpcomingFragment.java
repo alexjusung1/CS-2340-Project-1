@@ -33,7 +33,7 @@ public class UpcomingFragment extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         upcomingList.setLayoutManager(layoutManager);
-        binding.upcomingClassList.setAdapter(new UpcomingClassAdapter(upcomingNames));
+        upcomingList.setAdapter(new UpcomingClassAdapter(upcomingNames));
         upcomingList.addItemDecoration(new MaterialDividerItemDecoration(upcomingList.getContext(),
                 layoutManager.getOrientation()));
 

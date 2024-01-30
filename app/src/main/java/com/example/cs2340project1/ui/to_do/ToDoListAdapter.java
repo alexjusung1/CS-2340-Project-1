@@ -20,9 +20,9 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View upcomingRowView = LayoutInflater.from(parent.getContext())
+        View toDoRowView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_to_do_list_items, parent, false);
-        return new ToDoListAdapter.MyViewHolder(upcomingRowView);
+        return new ToDoListAdapter.MyViewHolder(toDoRowView);
     }
 
     @Override

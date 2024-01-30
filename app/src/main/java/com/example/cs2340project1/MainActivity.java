@@ -33,11 +33,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
-    // TODO: Implement a way to save data; use the File API and create some data wrapper
+    // TODO: Implement a way to save data; use the DataStore API
     @Override
     protected void onPause() {
         super.onPause();
-
-
     }
 }
