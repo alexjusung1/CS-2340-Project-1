@@ -19,7 +19,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="?attr/colorOnPrimaryContainer"
         app:layout_constraintBottom_toTopOf="@+id/toDoRowItem"
-        app:layout_constraintEnd_toStartOf="@+id/dropdownButton"
+        app:layout_constraintEnd_toStartOf="@+id/toDoDropDown"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.50" />
@@ -38,7 +38,7 @@
         app:layout_constraintVertical_bias="0.5" />
 
     <Button
-        android:id="@+id/dropdownButton"
+        android:id="@+id/toDoDropDown"
         style="?attr/materialIconButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,6 +58,6 @@
         app:iconTint="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dropdownButton"
+        app:layout_constraintTop_toBottomOf="@+id/toDoDropDown"
         app:layout_constraintVertical_bias="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>
