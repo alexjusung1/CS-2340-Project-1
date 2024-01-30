@@ -8,10 +8,12 @@
     tools:context=".toDoListItems">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/toDoRowItem"
         android:layout_width="271dp"
         android:layout_height="53dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="25dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Math Test at 8 AM"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

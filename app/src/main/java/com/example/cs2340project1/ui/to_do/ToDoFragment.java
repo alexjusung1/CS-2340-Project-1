@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,12 +11,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cs2340project1.ToDoListAdapter;
 import com.example.cs2340project1.databinding.FragmentToDoBinding;
+import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 public class ToDoFragment extends Fragment {
 
-    private static String[] toDoListNames = {};
+    private static String[] toDoListNames = {"Math Test", "Class at 8 AM", "Homework due"};
     private FragmentToDoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,6 +32,8 @@ public class ToDoFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         toDoList.setLayoutManager(manager);
         toDoList.setAdapter(new ToDoListAdapter(toDoListNames));
+        toDoList.addItemDecoration(new MaterialDividerItemDecoration(toDoList.getContext(),
+                manager.getOrientation()));
 
 //        final TextView textView = binding.textNotifications;
 //        toDoViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);

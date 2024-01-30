@@ -1,10 +1,15 @@
-package com.example.cs2340project1;
+package com.example.cs2340project1.ui.to_do;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.cs2340project1.R;
+import com.example.cs2340project1.ui.upcoming.UpcomingClassAdapter;
 
 public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyViewHolder> {
     private String[] toDoListNames;
@@ -15,23 +20,30 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View upcomingRowView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_to_do_list_items, parent, false);
+        return new ToDoListAdapter.MyViewHolder(upcomingRowView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        holder.getToDoRowItem().setText(toDoListNames[position]);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return toDoListNames.length;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        private final TextView toDoListView;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            toDoListView = itemView.findViewById(R.id.toDoRowItem);
         }
+
+        public TextView getToDoRowItem() {return toDoListView;}
     }
 }

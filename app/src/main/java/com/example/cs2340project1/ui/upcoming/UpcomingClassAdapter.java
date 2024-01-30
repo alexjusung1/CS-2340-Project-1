@@ -20,9 +20,9 @@ public class UpcomingClassAdapter extends RecyclerView.Adapter<UpcomingClassAdap
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View upcomingRowView = LayoutInflater.from(parent.getContext())
+        View toDoRowView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_upcoming_class_row, parent, false);
-        return new MyViewHolder(upcomingRowView);
+        return new MyViewHolder(toDoRowView);
     }
 
     @Override
