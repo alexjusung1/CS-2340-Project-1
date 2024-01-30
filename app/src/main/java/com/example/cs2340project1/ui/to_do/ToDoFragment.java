@@ -16,7 +16,7 @@ import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 public class ToDoFragment extends Fragment {
 
-    private static String[] toDoListNames = {"Math Test", "Class at 8 AM", "Homework due"};
+    private static String[] toDoListNames = {"Today", "Tomorrow"};
     private FragmentToDoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
