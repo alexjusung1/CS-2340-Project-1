@@ -6,16 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cs2340project1.databinding.FragmentUpcomingBinding;
-
-import java.util.List;
+import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 public class UpcomingFragment extends Fragment {
-    private static final String[] upcomingNames = { "" };
+    private static final String[] upcomingNames = { "MATH 3215", "CS 3511", "CS 2340", "LMC 3202", };
     private FragmentUpcomingBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -28,15 +28,16 @@ public class UpcomingFragment extends Fragment {
 
 //        final TextView textView = binding.textDashboard;
 //        toDoViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        RecyclerView upcomingList = binding.upcomingClassList;
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        upcomingList.setLayoutManager(layoutManager);
+        binding.upcomingClassList.setAdapter(new UpcomingClassAdapter(upcomingNames));
+        upcomingList.addItemDecoration(new MaterialDividerItemDecoration(upcomingList.getContext(),
+                layoutManager.getOrientation()));
+
         return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view,
-                              @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
     }
 
     @Override
