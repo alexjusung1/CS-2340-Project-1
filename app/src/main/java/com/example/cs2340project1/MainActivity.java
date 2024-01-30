@@ -29,8 +29,15 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_classes, R.id.navigation_upcoming, R.id.navigation_to_do)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration); // Comment if not want Action Bar
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
+    // TODO: Implement a way to save data; use the File API and create some data wrapper
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+    }
 }

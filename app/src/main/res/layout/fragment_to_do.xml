@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey"
     tools:context=".ui.to_do.ToDoFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="367dp"
         android:layout_height="295dp"
-        android:background="@color/dark_grey"
+        android:background="?attr/colorPrimaryContainer"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="80dp" >
+        tools:layout_editor_absoluteY="80dp">
 
         <EditText
             android:id="@+id/editTextText"
