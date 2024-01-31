@@ -11,12 +11,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cs2340project1.UpcomingClass;
 import com.example.cs2340project1.databinding.FragmentUpcomingBinding;
+import com.example.cs2340project1.ui.classes.ClassesViewModel;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 public class UpcomingFragment extends Fragment {
     private static final String[] upcomingNames = { "MATH 3215", "CS 3511", "CS 2340", "LMC 3202", };
-    private UpcomingViewModel toDoViewModel;
     private FragmentUpcomingBinding binding;
 
     public UpcomingFragment() {
@@ -25,21 +26,25 @@ public class UpcomingFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        toDoViewModel = new ViewModelProvider(requireActivity()).get(UpcomingViewModel.class);
+        ViewModelProvider activityVMProvider = new ViewModelProvider(requireActivity());
+
+        ClassesViewModel classesViewModel = activityVMProvider.get(ClassesViewModel.class);
+        UpcomingViewModel upcomingViewModel = activityVMProvider.get(UpcomingViewModel.class);
 
         binding = FragmentUpcomingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-//        final TextView textView = binding.textDashboard;
-//        toDoViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         RecyclerView upcomingList = binding.upcomingClassList;
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         upcomingList.setLayoutManager(layoutManager);
-        upcomingList.setAdapter(new UpcomingClassAdapter(upcomingNames));
+
+        UpcomingClassAdapter adapter = new UpcomingClassAdapter();
+        upcomingList.setAdapter(adapter);
         upcomingList.addItemDecoration(new MaterialDividerItemDecoration(upcomingList.getContext(),
                 layoutManager.getOrientation()));
+
+        classesViewModel.getClassList().observe(getViewLifecycleOwner(), adapter::submitList);
 
         return root;
     }

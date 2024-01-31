@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UpcomingClassRow#newInstance} factory method to
+ * Use the {@link UpcomingClass#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UpcomingClassRow extends Fragment {
+public class UpcomingClass extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class UpcomingClassRow extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public UpcomingClassRow() {
+    public UpcomingClass() {
         // Required empty public constructor
     }
 
@@ -37,8 +37,8 @@ public class UpcomingClassRow extends Fragment {
      * @return A new instance of fragment upcoming_row_item.
      */
     // TODO: Rename and change types and number of parameters
-    public static UpcomingClassRow newInstance(String param1, String param2) {
-        UpcomingClassRow fragment = new UpcomingClassRow();
+    public static UpcomingClass newInstance(String param1, String param2) {
+        UpcomingClass fragment = new UpcomingClass();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class UpcomingClassRow extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_upcoming_class_row, container, false);
+        return inflater.inflate(R.layout.fragment_upcoming_class, container, false);
     }
 }

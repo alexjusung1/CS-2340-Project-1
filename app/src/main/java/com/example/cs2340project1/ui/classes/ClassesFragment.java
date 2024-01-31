@@ -24,8 +24,8 @@ public class ClassesFragment extends Fragment {
         binding = FragmentClassesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        classesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        final TextView textView = binding.textHome;
+//        classesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
