@@ -5,15 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class UpcomingViewModel extends ViewModel {
-
-    private final MutableLiveData<String> mText;
+    private MutableLiveData<String> string;
 
     public UpcomingViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
-    }
 
-    public LiveData<String> getText() {
-        return mText;
     }
 }

@@ -16,12 +16,16 @@ import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 public class UpcomingFragment extends Fragment {
     private static final String[] upcomingNames = { "MATH 3215", "CS 3511", "CS 2340", "LMC 3202", };
+    private UpcomingViewModel toDoViewModel;
     private FragmentUpcomingBinding binding;
+
+    public UpcomingFragment() {
+        // Required empty public constructor
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        UpcomingViewModel toDoViewModel =
-                new ViewModelProvider(this).get(UpcomingViewModel.class);
+        toDoViewModel = new ViewModelProvider(requireActivity()).get(UpcomingViewModel.class);
 
         binding = FragmentUpcomingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

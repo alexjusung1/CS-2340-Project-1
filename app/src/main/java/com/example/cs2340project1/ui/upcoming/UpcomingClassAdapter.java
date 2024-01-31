@@ -27,7 +27,7 @@ public class UpcomingClassAdapter extends RecyclerView.Adapter<UpcomingClassAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.getUpcomingClassNameView().setText(upcomingClassNames[position]);
+        holder.upcomingClassNameView.setText(upcomingClassNames[position]);
     }
 
     @Override
@@ -41,10 +41,6 @@ public class UpcomingClassAdapter extends RecyclerView.Adapter<UpcomingClassAdap
         public MyViewHolder(View view) {
             super(view);
             upcomingClassNameView = view.findViewById(R.id.upcomingClassName);
-        }
-
-        public TextView getUpcomingClassNameView() {
-            return upcomingClassNameView;
         }
     }
 }
