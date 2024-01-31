@@ -10,7 +10,6 @@ import java.util.List;
 
 public class UpcomingViewModel extends ViewModel {
     private MutableLiveData<List<UpcomingData>> upcomingDataList;
-    private MutableLiveData<Integer> selectedDropdownIndex;
 
     public UpcomingViewModel() {
 
