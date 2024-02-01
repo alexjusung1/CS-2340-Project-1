@@ -1,7 +1,9 @@
 package com.example.cs2340project1.ui.classes;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.cs2340project1.data.ClassData;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassesViewModel extends ViewModel {
-    private MutableLiveData<List<ClassData>> classList;
+    private final MutableLiveData<List<ClassData>> classList;
 
     public ClassesViewModel() {
         List<ClassData> testList = new ArrayList<>();
@@ -18,20 +20,6 @@ public class ClassesViewModel extends ViewModel {
         testList.add(new ClassData.ClassDataBuilder().className("Class 2").build());
         testList.add(new ClassData.ClassDataBuilder().className("Class 3").build());
         testList.add(new ClassData.ClassDataBuilder().className("Class 4").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 5").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 6").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 7").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 8").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 9").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 10").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 11").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 12").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 13").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 14").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 15").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 16").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 17").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 18").build());
 
         classList = new MutableLiveData<>(testList);
     }
@@ -39,4 +27,10 @@ public class ClassesViewModel extends ViewModel {
     public MutableLiveData<List<ClassData>> getClassList() {
         return classList;
     }
+
+    public void attachClassListObserver(LifecycleOwner owner, Observer<List<ClassData>> observer) {
+        classList.observe(owner, observer);
+    }
+
+    // TODO: Implement adding to classList when implementing ClassesFragment
 }
