@@ -1,7 +1,6 @@
 package com.example.cs2340project1.ui.classes;
 
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -16,10 +15,10 @@ public class ClassesViewModel extends ViewModel {
 
     public ClassesViewModel() {
         List<ClassData> testList = new ArrayList<>();
-        testList.add(new ClassData.ClassDataBuilder().className("Class 1").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 2").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 3").build());
-        testList.add(new ClassData.ClassDataBuilder().className("Class 4").build());
+        testList.add(new ClassData.Builder().className("Class 1").build());
+        testList.add(new ClassData.Builder().className("Class 2").build());
+        testList.add(new ClassData.Builder().className("Class 3").build());
+        testList.add(new ClassData.Builder().className("Class 4").build());
 
         classList = new MutableLiveData<>(testList);
     }

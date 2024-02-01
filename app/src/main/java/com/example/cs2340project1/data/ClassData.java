@@ -22,7 +22,7 @@ public class ClassData {
     private LocalTime beginTime;
     private LocalTime endTime;
 
-    public ClassData(ClassDataBuilder builder) {
+    public ClassData(Builder builder) {
         className = builder.className;
         instructorName = builder.instructorName;
         classDays = builder.classDays;
@@ -80,7 +80,7 @@ public class ClassData {
         M, T, W, R, F
     }
 
-    public static class ClassDataBuilder {
+    public static class Builder {
         private String className = "Sample Class";
         private String instructorName = "Sample instructor";
         private EnumSet<ClassData.DayOfWeek> classDays = EnumSet.noneOf(ClassData.DayOfWeek.class);
@@ -89,7 +89,7 @@ public class ClassData {
 
         // TODO: Implement remaining Builder design pattern (https://www.baeldung.com/java-builder-pattern-inheritance)
 
-        public ClassDataBuilder className(String className) {
+        public Builder className(String className) {
             this.className = className;
             return this;
         }
