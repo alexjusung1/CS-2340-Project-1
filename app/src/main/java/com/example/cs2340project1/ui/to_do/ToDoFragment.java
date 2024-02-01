@@ -4,45 +4,56 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cs2340project1.databinding.FragmentToDoBinding;
-import com.google.android.material.divider.MaterialDividerItemDecoration;
+import com.example.cs2340project1.R;
+
+import java.util.ArrayList;
 
 public class ToDoFragment extends Fragment {
 
-    private static String[] toDoListNames = {"Today", "Tomorrow"};
-    private FragmentToDoBinding binding;
+    private EditText editTextTask;
+    private Button buttonAdd;
+    private ListView listViewTasks;
+    private ArrayList<String> taskList;
+    private ArrayAdapter<String> adapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        ToDoViewModel toDoViewModel =
-                new ViewModelProvider(this).get(ToDoViewModel.class);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_to_do, container, false);
 
-        binding = FragmentToDoBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        editTextTask = view.findViewById(R.id.editTextTask);
+        buttonAdd = view.findViewById(R.id.buttonAdd);
+        listViewTasks = view.findViewById(R.id.listViewTasks);
 
-        RecyclerView toDoList = binding.toDoListItems;
+        taskList = new ArrayList<>();
+        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, taskList);
+        listViewTasks.setAdapter(adapter);
 
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        toDoList.setLayoutManager(manager);
-        toDoList.setAdapter(new ToDoListAdapter(toDoListNames));
-        toDoList.addItemDecoration(new MaterialDividerItemDecoration(toDoList.getContext(),
-                manager.getOrientation()));
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addTask();
+            }
+        });
 
-//        final TextView textView = binding.textNotifications;
-//        toDoViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+        return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    private void addTask() {
+        String task = editTextTask.getText().toString().trim();
+        if (!task.isEmpty()) {
+            taskList.add(task);
+            adapter.notifyDataSetChanged();
+            editTextTask.setText("");
+        }
     }
 }
