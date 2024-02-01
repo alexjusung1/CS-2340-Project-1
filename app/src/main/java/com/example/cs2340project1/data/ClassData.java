@@ -16,9 +16,6 @@ import kotlin.coroutines.Continuation;
 
 public class ClassData {
     private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm a");
-    private static int nextAvailableID = 0;
-
-    private final int id;
     private String className;
     private String instructorName;
     private final EnumSet<ClassData.DayOfWeek> classDays;
@@ -31,9 +28,6 @@ public class ClassData {
         classDays = builder.classDays;
         beginTime = builder.beginTime;
         endTime = builder.endTime;
-
-        id = nextAvailableID;
-        nextAvailableID++;
     }
 
     public String getClassName() {
@@ -80,10 +74,6 @@ public class ClassData {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public enum DayOfWeek {

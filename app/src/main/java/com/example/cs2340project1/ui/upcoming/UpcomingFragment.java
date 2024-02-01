@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import com.example.cs2340project1.UpcomingClass;
 import com.example.cs2340project1.databinding.FragmentUpcomingBinding;
 import com.example.cs2340project1.ui.classes.ClassesViewModel;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
@@ -30,6 +29,8 @@ public class UpcomingFragment extends Fragment {
         ViewModelProvider activityVMProvider = new ViewModelProvider(requireActivity());
 
         ClassesViewModel classesViewModel = activityVMProvider.get(ClassesViewModel.class);
+        UpcomingViewModel upcomingViewModel = activityVMProvider.get(UpcomingViewModel.class);
+        upcomingViewModel.updateClassDataList(classesViewModel.getClassList().getValue());
 
         binding = FragmentUpcomingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -39,7 +40,7 @@ public class UpcomingFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         upcomingList.setLayoutManager(layoutManager);
 
-        UpcomingClassAdapter adapter = new UpcomingClassAdapter();
+        UpcomingClassAdapter adapter = new UpcomingClassAdapter(upcomingViewModel);
         upcomingList.setAdapter(adapter);
         upcomingList.addItemDecoration(new MaterialDividerItemDecoration(upcomingList.getContext(),
                 layoutManager.getOrientation()));
@@ -48,7 +49,7 @@ public class UpcomingFragment extends Fragment {
         animator.setSupportsChangeAnimations(false);
         upcomingList.setItemAnimator(animator);
 
-        classesViewModel.getClassList().observe(getViewLifecycleOwner(), adapter::submitList);
+        classesViewModel.attachClassListObserver(getViewLifecycleOwner(), adapter::submitList);
 
         return root;
     }

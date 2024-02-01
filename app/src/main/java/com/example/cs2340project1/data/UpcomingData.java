@@ -4,9 +4,18 @@ import android.content.SharedPreferences;
 
 import java.io.Serializable;
 
-public class UpcomingData {
+public abstract class UpcomingData {
     protected String title;
     protected ClassData attachedClass;
+
+    public UpcomingData(String title, ClassData attachedClass) {
+        this.title = title;
+        this.attachedClass = attachedClass;
+    }
+
+    public String getTitle() { return title; }
+
+    public ClassData getAttachedClass() { return attachedClass; }
 
     @Override
     public boolean equals(Object o) {
