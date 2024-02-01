@@ -4,46 +4,40 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import
 
 import com.example.cs2340project1.R;
-
-import java.util.ArrayList;
+import com.example.cs2340project1.databinding.FragmentToDoBinding;
 
 public class ToDoFragment extends Fragment {
 
     private EditText editTextTask;
     private Button buttonAdd;
-    private ListView listViewTasks;
-    private ArrayList<String> taskList;
-    private ArrayAdapter<String> adapter;
+    private ToDoViewModel viewModel;
+    private FragmentToDoBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_to_do, container, false);
+        binding = FragmentToDoBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        editTextTask = view.findViewById(R.id.editTextTask);
-        buttonAdd = view.findViewById(R.id.buttonAdd);
-        listViewTasks = view.findViewById(R.id.listViewTasks);
+        viewModel = new ViewModelProvider(requireActivity()).get(ToDoViewModel.class);
+        binding.setViewModel(viewModel);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
 
-        taskList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, taskList);
-        listViewTasks.setAdapter(adapter);
+        editTextTask = binding.getRoot().findViewById(R.id.editTextTask);
+        buttonAdd = binding.getRoot().findViewById(R.id.buttonAdd);
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addTask();
-            }
-        });
+        buttonAdd.setOnClickListener(v -> addTask());
 
         return view;
     }
@@ -51,8 +45,7 @@ public class ToDoFragment extends Fragment {
     private void addTask() {
         String task = editTextTask.getText().toString().trim();
         if (!task.isEmpty()) {
-            taskList.add(task);
-            adapter.notifyDataSetChanged();
+            viewModel.addItem(task);
             editTextTask.setText("");
         }
     }

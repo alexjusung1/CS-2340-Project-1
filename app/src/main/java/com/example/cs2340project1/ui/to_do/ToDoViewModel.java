@@ -1,19 +1,25 @@
 package com.example.cs2340project1.ui.to_do;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ToDoViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<List<String>> toDoItems;
 
     public ToDoViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        toDoItems = new MutableLiveData<>(new ArrayList<>());
+    }
+    public void addItem(String newItem) {
+        List<String> itemsList = toDoItems.getValue();
+        itemsList.add(newItem);
+        toDoItems.setValue(itemsList);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public MutableLiveData<List<String>> getItems() {
+        return toDoItems;
     }
 }
