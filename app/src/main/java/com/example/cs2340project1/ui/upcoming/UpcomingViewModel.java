@@ -1,5 +1,6 @@
 package com.example.cs2340project1.ui.upcoming;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -21,12 +22,15 @@ public class UpcomingViewModel extends ViewModel {
     public UpcomingViewModel() {
         List<UpcomingData> dataList = new ArrayList<>();
         upcomingDataList = new MutableLiveData<>(dataList);
-
         classToUpcomingObservers = new HashMap<>();
     }
 
     // Temporary; to test functionality
     public void updateClassDataList(List<ClassData> classDataList) {
+        if (classToUpcomingObservers.size() > 0) {
+            return;
+        }
+
         List<UpcomingData> dataList = upcomingDataList.getValue();
 
         ClassData class1 = classDataList.get(0);

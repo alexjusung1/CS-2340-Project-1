@@ -4,10 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.datastore.core.Serializer;
 
+import com.example.cs2340project1.MyTimeUtils;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,6 @@ import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 
 public class ClassData {
-    private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm a");
     private String className;
     private String instructorName;
     private final EnumSet<ClassData.DayOfWeek> classDays;
@@ -65,7 +65,9 @@ public class ClassData {
             return "";
         }
 
-        return String.format("%s - %s", beginTime.format(timeFormat), endTime.format(timeFormat));
+        return String.format("%s - %s",
+                beginTime.format(MyTimeUtils.timeFormat),
+                endTime.format(MyTimeUtils.timeFormat));
     }
 
     public void setBeginTime(LocalTime beginTime) {

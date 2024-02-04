@@ -15,8 +15,11 @@ import com.example.cs2340project1.data.UpcomingAssignmentData;
 import com.example.cs2340project1.data.UpcomingData;
 
 public class UpcomingAdapter extends ListAdapter<UpcomingData, UpcomingAdapter.ClassHolder> {
-    protected UpcomingAdapter() {
+    private UpcomingViewModel upcomingViewModel;
+
+    protected UpcomingAdapter(UpcomingViewModel upcomingViewModel) {
         super(DIFF_CALLBACK);
+        this.upcomingViewModel = upcomingViewModel;
     }
 
     @NonNull
