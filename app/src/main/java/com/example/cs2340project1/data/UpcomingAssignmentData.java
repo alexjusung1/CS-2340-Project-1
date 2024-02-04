@@ -16,8 +16,12 @@ public class UpcomingAssignmentData extends UpcomingData {
             UpcomingAssignmentData other = (UpcomingAssignmentData) o;
 
             return super.equals(o);
-//                    && dueDateTime.equals(other.dueDateTime);
         }
         return false;
+    }
+
+    @Override
+    public int getType() {
+        return 0;
     }
 }

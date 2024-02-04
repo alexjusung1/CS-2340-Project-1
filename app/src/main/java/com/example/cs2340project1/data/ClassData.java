@@ -4,10 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.datastore.core.Serializer;
 
+import com.example.cs2340project1.MyTimeUtils;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
 
@@ -15,14 +16,13 @@ import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 
 public class ClassData {
-    private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm a");
     private String className;
     private String instructorName;
     private final EnumSet<ClassData.DayOfWeek> classDays;
     private LocalTime beginTime;
     private LocalTime endTime;
 
-    public ClassData(ClassDataBuilder builder) {
+    public ClassData(Builder builder) {
         className = builder.className;
         instructorName = builder.instructorName;
         classDays = builder.classDays;
@@ -65,7 +65,9 @@ public class ClassData {
             return "";
         }
 
-        return String.format("%s - %s", beginTime.format(timeFormat), endTime.format(timeFormat));
+        return String.format("%s - %s",
+                beginTime.format(MyTimeUtils.timeFormat),
+                endTime.format(MyTimeUtils.timeFormat));
     }
 
     public void setBeginTime(LocalTime beginTime) {
@@ -80,7 +82,7 @@ public class ClassData {
         M, T, W, R, F
     }
 
-    public static class ClassDataBuilder {
+    public static class Builder {
         private String className = "Sample Class";
         private String instructorName = "Sample instructor";
         private EnumSet<ClassData.DayOfWeek> classDays = EnumSet.noneOf(ClassData.DayOfWeek.class);
@@ -89,7 +91,7 @@ public class ClassData {
 
         // TODO: Implement remaining Builder design pattern (https://www.baeldung.com/java-builder-pattern-inheritance)
 
-        public ClassDataBuilder className(String className) {
+        public Builder className(String className) {
             this.className = className;
             return this;
         }

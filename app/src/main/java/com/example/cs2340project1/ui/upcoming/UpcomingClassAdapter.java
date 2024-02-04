@@ -3,6 +3,9 @@ package com.example.cs2340project1.ui.upcoming;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.Adapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -23,8 +27,10 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.example.cs2340project1.R;
 import com.example.cs2340project1.data.ClassData;
+import com.example.cs2340project1.data.UpcomingAssignmentData;
 import com.example.cs2340project1.data.UpcomingData;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 import java.util.List;
@@ -44,7 +50,7 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
         View upcomingClassView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_upcoming_class, parent, false);
 
-        ClassHolder holder = new ClassHolder(upcomingClassView, parent.getContext());
+        ClassHolder holder = new ClassHolder(upcomingClassView, parent.getContext(), upcomingViewModel);
 
         holder.dropdownButton.setOnClickListener(v -> {
             if (currentExpanded != null) {
@@ -65,10 +71,11 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
 
     @Override
     public void onBindViewHolder(@NonNull ClassHolder holder, int position) {
-        holder.bind(getItem(position), upcomingViewModel);
+        holder.bind(getItem(position));
     }
 
     public static class ClassHolder extends RecyclerView.ViewHolder {
+        final UpcomingViewModel upcomingViewModel;
         final TextView className;
         final MaterialButton dropdownButton;
         final MaterialButton addButton;
@@ -77,8 +84,11 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
         boolean expanded = false;
 
         @SuppressLint("WrongViewCast")
-        public ClassHolder(@NonNull View itemView, Context parentContext) {
+        public ClassHolder(@NonNull View itemView, Context parentContext, UpcomingViewModel upcomingViewModel) {
             super(itemView);
+
+            this.upcomingViewModel = upcomingViewModel;
+
             className = itemView.findViewById(R.id.upcomingClassName);
             dropdownButton = itemView.findViewById(R.id.dropdownButton);
             addButton = itemView.findViewById(R.id.addButton);
@@ -87,21 +97,33 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
             LinearLayoutManager layoutManager = new LinearLayoutManager(parentContext);
             upcomingList.setLayoutManager(layoutManager);
 
-            upcomingList.addItemDecoration(new MaterialDividerItemDecoration(upcomingList.getContext(),
-                    layoutManager.getOrientation()));
+            MaterialDividerItemDecoration decoration = new MaterialDividerItemDecoration(upcomingList.getContext(),
+                    layoutManager.getOrientation());
+            decoration.setDividerColor(Color.TRANSPARENT);
+            upcomingList.addItemDecoration(decoration);
 
             SimpleItemAnimator animator = new DefaultItemAnimator();
             animator.setSupportsChangeAnimations(false);
             upcomingList.setItemAnimator(animator);
 
-            adapter = new UpcomingAdapter();
+            adapter = new UpcomingAdapter(upcomingViewModel);
             upcomingList.setAdapter(adapter);
         }
 
-        public void bind(ClassData classData, UpcomingViewModel upcomingViewModel) {
+        public void bind(ClassData classData) {
             className.setText(classData.getClassName());
-            upcomingList.setVisibility(expanded && adapter.getItemCount() != 0 ? View.VISIBLE : View.GONE);
-            upcomingViewModel.attachClassUpcomingObserver(classData, adapter::submitList);
+            if (expanded) {
+                upcomingList.setVisibility(View.VISIBLE);
+                upcomingViewModel.attachClassUpcomingObserver(classData, adapter::submitList);
+                addButton.setVisibility(View.VISIBLE);
+                addButton.setOnClickListener(view -> {
+                    upcomingViewModel.addUpcomingData(new UpcomingAssignmentData("New Assignment",
+                            classData));
+                });
+            } else {
+                upcomingList.setVisibility(View.GONE);
+                addButton.setVisibility(View.GONE);
+            }
         }
     }
 

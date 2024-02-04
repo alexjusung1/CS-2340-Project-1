@@ -26,4 +26,6 @@ public abstract class UpcomingData {
         }
         return false;
     }
+
+    public abstract int getType();
 }
