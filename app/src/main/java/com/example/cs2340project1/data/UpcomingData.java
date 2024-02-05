@@ -1,8 +1,9 @@
 package com.example.cs2340project1.data;
 
-import android.content.SharedPreferences;
+import android.view.View;
 
-import java.io.Serializable;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class UpcomingData {
     protected String title;
@@ -28,4 +29,12 @@ public abstract class UpcomingData {
     }
 
     public abstract int getType();
+
+    public static abstract class UpcomingHolder extends RecyclerView.ViewHolder {
+        public UpcomingHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        public abstract void bind(UpcomingData data);
+    }
 }

@@ -4,4 +4,9 @@
         <item>Class</item>
         <item>Due Date</item>
     </string-array>
+
+    <string-array name="test_classes">
+        <item>Class 1</item>
+        <item>Class 2</item>
+    </string-array>
 </resources>

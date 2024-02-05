@@ -3,21 +3,13 @@ package com.example.cs2340project1.ui.upcoming;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,12 +20,8 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import com.example.cs2340project1.R;
 import com.example.cs2340project1.data.ClassData;
 import com.example.cs2340project1.data.UpcomingAssignmentData;
-import com.example.cs2340project1.data.UpcomingData;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.color.MaterialColors;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
-
-import java.util.List;
 
 public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAdapter.ClassHolder> {
     private ClassHolder currentExpanded;
@@ -48,7 +36,7 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
     @Override
     public ClassHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View upcomingClassView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_upcoming_class, parent, false);
+                .inflate(R.layout.upcoming_class, parent, false);
 
         ClassHolder holder = new ClassHolder(upcomingClassView, parent.getContext(), upcomingViewModel);
 
@@ -100,6 +88,7 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
             MaterialDividerItemDecoration decoration = new MaterialDividerItemDecoration(upcomingList.getContext(),
                     layoutManager.getOrientation());
             decoration.setDividerColor(Color.TRANSPARENT);
+            decoration.setDividerThickness(8);
             upcomingList.addItemDecoration(decoration);
 
             SimpleItemAnimator animator = new DefaultItemAnimator();

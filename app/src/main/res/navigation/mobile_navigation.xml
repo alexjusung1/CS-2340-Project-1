@@ -22,4 +22,5 @@
         android:name="com.example.cs2340project1.ui.to_do.ToDoFragment"
         android:label="@string/title_to_do"
         tools:layout="@layout/fragment_to_do" />
+
 </navigation>

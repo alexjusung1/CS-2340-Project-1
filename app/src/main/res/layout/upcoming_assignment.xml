@@ -7,32 +7,32 @@
     android:background="?attr/colorPrimaryContainer">
 
     <TextView
-        android:id="@+id/upcomingTitle"
+        android:id="@+id/assignmentTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Assignment #1 - Exploring Android Studio"
+        android:text="Sample Assignment Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="?attr/colorOnPrimaryContainer"
-        app:layout_constraintBottom_toTopOf="@+id/toDoRowItem"
+        app:layout_constraintBottom_toTopOf="@+id/assignmentDateTime"
         app:layout_constraintEnd_toStartOf="@+id/dropdownButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.50" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
-        android:id="@+id/toDoRowItem"
+        android:id="@+id/assignmentDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="due by Jan 14th, 11:59 PM"
+        android:text="sample due datetime"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upcomingTitle"
+        app:layout_constraintTop_toBottomOf="@+id/assignmentTitle"
         app:layout_constraintVertical_bias="0.5" />
 
     <Button
@@ -58,4 +58,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dropdownButton"
         app:layout_constraintVertical_bias="0.5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cs2340project1.R;
 import com.example.cs2340project1.data.UpcomingAssignmentData;
 import com.example.cs2340project1.data.UpcomingData;
+import com.example.cs2340project1.data.UpcomingExamData;
 
-public class UpcomingAdapter extends ListAdapter<UpcomingData, UpcomingAdapter.ClassHolder> {
+public class UpcomingAdapter extends ListAdapter<UpcomingData, UpcomingData.UpcomingHolder> {
     private UpcomingViewModel upcomingViewModel;
 
     protected UpcomingAdapter(UpcomingViewModel upcomingViewModel) {
@@ -24,29 +25,28 @@ public class UpcomingAdapter extends ListAdapter<UpcomingData, UpcomingAdapter.C
 
     @NonNull
     @Override
-    public ClassHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View upcomingAssignmentView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_upcoming_assignment, parent, false);
+    public UpcomingData.UpcomingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        return new ClassHolder(upcomingAssignmentView);
+        switch (viewType) {
+            case 0:
+                return new UpcomingAssignmentData.AssignmentHolder(
+                        inflater.inflate(R.layout.upcoming_assignment, parent, false));
+            case 1:
+                return new UpcomingExamData.ExamHolder(
+                        inflater.inflate(R.layout.upcoming_exam, parent, false));
+        }
+        throw new IllegalArgumentException("ViewType is not supported");
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ClassHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UpcomingData.UpcomingHolder holder, int position) {
         holder.bind(getItem(position));
     }
 
-    public static class ClassHolder extends RecyclerView.ViewHolder {
-        final TextView upcomingTitle;
-
-        public ClassHolder(@NonNull View itemView) {
-            super(itemView);
-            upcomingTitle = itemView.findViewById(R.id.upcomingTitle);
-        }
-
-        public void bind(UpcomingData data) {
-            upcomingTitle.setText(data.getTitle());
-        }
+    @Override
+    public int getItemViewType(int position) {
+        return getItem(position).getType();
     }
 
     public static final DiffUtil.ItemCallback<UpcomingData> DIFF_CALLBACK = new DiffUtil.ItemCallback<UpcomingData>() {

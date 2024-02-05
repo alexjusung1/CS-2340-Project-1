@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.cs2340project1.data.ClassData;
 import com.example.cs2340project1.data.UpcomingAssignmentData;
 import com.example.cs2340project1.data.UpcomingData;
+import com.example.cs2340project1.data.UpcomingExamData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class UpcomingViewModel extends ViewModel {
         dataList.add(new UpcomingAssignmentData("Assignment 1", class1));
         dataList.add(new UpcomingAssignmentData("Assignment 2", class1));
         dataList.add(new UpcomingAssignmentData("Assignment 3", class1));
-        dataList.add(new UpcomingAssignmentData("Assignment 4", class1));
+        dataList.add(new UpcomingExamData("Exam 1", class1));
 
         ClassData class2 = classDataList.get(1);
         dataList.add(new UpcomingAssignmentData("Assignment 1", class2));

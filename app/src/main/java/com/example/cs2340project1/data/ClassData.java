@@ -84,10 +84,10 @@ public class ClassData {
 
     public static class Builder {
         private String className = "Sample Class";
-        private String instructorName = "Sample instructor";
+        private String instructorName = "Sample Instructor";
         private EnumSet<ClassData.DayOfWeek> classDays = EnumSet.noneOf(ClassData.DayOfWeek.class);
-        private LocalTime beginTime = null;
-        private LocalTime endTime = null;
+        private LocalTime beginTime = MyTimeUtils.defaultBegin;
+        private LocalTime endTime = MyTimeUtils.defaultEnd;
 
         // TODO: Implement remaining Builder design pattern (https://www.baeldung.com/java-builder-pattern-inheritance)
 
