@@ -1,48 +1,63 @@
 package com.example.cs2340project1.ui.to_do;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cs2340project1.R;
-import com.example.cs2340project1.databinding.FragmentToDoBinding;
+import com.example.cs2340project1.ui.to_do.Adapter.ToDoAdapter;
+import com.example.cs2340project1.ui.to_do.Model.ToDoModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class ToDoFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    private EditText editTextTask;
-    private Button buttonAdd;
-    private ToDoViewModel viewModel;
-    private FragmentToDoBinding binding;
+public class ToDoFragment extends AppCompatActivity {
+    private RecyclerView toDoRecycylerView;
+    private ToDoAdapter tasksAdapter;
+    private List<ToDoModel> toDoList;
+    private FloatingActionButton fab;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentToDoBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_to_do);
+        getSupportActionBar().hide();
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ToDoViewModel.class);
+        toDoList = new ArrayList<>();
 
-        editTextTask = binding.getRoot().findViewById(R.id.editTextTask);
-        buttonAdd = binding.getRoot().findViewById(R.id.buttonAdd);
+        toDoRecycylerView = findViewById(R.id.ToDoRecyclerView);
+        toDoRecycylerView.setLayoutManager(new LinearLayoutManager(this));
+        tasksAdapter = new ToDoAdapter(this);
+        toDoRecycylerView.setAdapter(tasksAdapter);
 
-        buttonAdd.setOnClickListener(v -> addTask());
+        ToDoModel task = new ToDoModel();
+        task.setTask("Math Test Due Tomorrow");
+        task.setStatus(0);
+        task.setId(1);
 
-        return view;
+        toDoList.add(task);
+        toDoList.add(task);
+        toDoList.add(task);
+        toDoList.add(task);
+        toDoList.add(task);
+
+        tasksAdapter.setTasks(toDoList);
+        fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+            }
+        });
+
     }
 
-    private void addTask() {
-        String task = editTextTask.getText().toString().trim();
-        if (!task.isEmpty()) {
-            viewModel.addItem(task);
-            editTextTask.setText("");
-        }
-    }
 }
