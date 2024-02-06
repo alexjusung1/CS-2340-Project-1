@@ -3,6 +3,8 @@ package com.example.cs2340project1.ui.classes;
 
 import com.example.cs2340project1.R;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,9 +41,30 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
         return classList.size();
     }
 
+    public Context getContext() {
+        return classesFragment.getContext();
+    }
+
     public void setClasses(List<ClassObj> classes) {
         classList = classes;
         notifyDataSetChanged();
+    }
+
+    public void deleteItem(int position) {
+        ClassObj item = classList.get(position);
+        classList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void editItem(int position) {
+        ClassObj item = classList.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putString("className", item.getClassName());
+        bundle.putString("instructorName", item.getInstructorName());
+        bundle.putString("days", item.getDays());
+        bundle.putString("time", item.getTime());
+        deleteItem(position);
+        classesFragment.edit(bundle);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

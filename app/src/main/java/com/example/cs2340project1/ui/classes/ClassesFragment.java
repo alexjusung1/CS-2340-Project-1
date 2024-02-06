@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +40,9 @@ public class ClassesFragment extends Fragment {
         classesAdapter = new ClassesAdapter(this);
         classRecyclerView.setAdapter(classesAdapter);
 
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new RecyclerClassTouchHelper(classesAdapter));
+        itemTouchHelper.attachToRecyclerView(classRecyclerView);
 
         classList = new ArrayList<ClassObj>();
         classList.add(new ClassObj("CS 2340", "Pedroguillermo Feijoogarcia",
@@ -48,6 +52,14 @@ public class ClassesFragment extends Fragment {
 //        final TextView textView = binding.textHome;
 //        classesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+    }
+
+    public void edit(Bundle bundle) {
+        bundle.get("className");
+        binding.classNameField.setText(bundle.get("className").toString());
+        binding.classInstructorField.setText(bundle.get("instructorName").toString());
+        binding.classDaysField.setText(bundle.get("days").toString());
+        binding.classTimeField.setText(bundle.get("time").toString());
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
