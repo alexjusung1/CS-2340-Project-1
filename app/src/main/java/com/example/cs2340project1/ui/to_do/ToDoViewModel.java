@@ -16,6 +16,10 @@ public class ToDoViewModel extends ViewModel {
         tasks.add(task);
     }
 
+    public void updateTask(Task task, int position) {
+        tasks.set(position, task);
+    }
+
     public void deleteTask(Task task) {
         tasks.remove(task);
     }

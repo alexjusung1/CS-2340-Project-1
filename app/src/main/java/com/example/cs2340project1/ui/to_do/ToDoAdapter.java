@@ -1,9 +1,11 @@
 package com.example.cs2340project1.ui.to_do;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cs2340project1.R;
+import com.example.cs2340project1.ui.classes.ClassObj;
 
 import java.util.List;
 
@@ -20,10 +23,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     private Context context;
     private ToDoViewModel toDoViewModel;
 
-    public ToDoAdapter(Context context, List<Task> tasks, ToDoViewModel toDoViewModel) {
+    private ToDoFragment toDoFragment;
+
+    public ToDoAdapter(Context context, List<Task> tasks, ToDoViewModel toDoViewModel, ToDoFragment toDoFragment) {
         this.context = context;
         this.tasks = tasks;
         this.toDoViewModel = toDoViewModel;
+        this.toDoFragment = toDoFragment;
     }
 
     @NonNull
@@ -41,16 +47,25 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         holder.toDoCheckBox.setChecked(false);
 
         holder.toDoCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (task.isChecked()) {
-                holder.toDoTextView.setTextColor(ContextCompat.getColor(context, R.color.completed_task_color));
+            if (isChecked) {
+                toDoViewModel.deleteTask(task);
+                notifyItemRemoved(position);
             } else {
                 holder.toDoTextView.setTextColor(ContextCompat.getColor(context, R.color.default_text_color));
             }
         });
 
-        holder.itemView.setOnClickListener(v -> {
+//        holder.itemView.setOnClickListener(v -> {
+//            if (task.isChecked()) {
+//                toDoViewModel.deleteTask(task);
+//                notifyItemRemoved(position);
+//            }
+//        });
+
+        holder.editButton.setOnClickListener(v -> {
             toDoViewModel.deleteTask(task);
-            notifyDataSetChanged();
+            toDoFragment.setEditText(task.getTaskName());
+            notifyItemRemoved(position);
         });
     }
 
@@ -63,10 +78,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         TextView toDoTextView;
         CheckBox toDoCheckBox;
 
+        Button editButton;
+
         public ToDoViewHolder(@NonNull View itemView) {
             super(itemView);
             toDoTextView = itemView.findViewById(R.id.toDoTextView);
             toDoCheckBox = itemView.findViewById(R.id.toDoCheckBox);
+            editButton = itemView.findViewById(R.id.editButton);
         }
     }
 }
