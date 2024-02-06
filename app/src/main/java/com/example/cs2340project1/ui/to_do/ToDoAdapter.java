@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cs2340project1.R;
-import com.example.cs2340project1.ui.classes.ClassObj;
 
 import java.util.List;
 
