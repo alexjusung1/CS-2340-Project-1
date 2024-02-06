@@ -15,6 +15,9 @@ import com.example.cs2340project1.data.UpcomingAssignmentData;
 import com.example.cs2340project1.data.UpcomingData;
 import com.example.cs2340project1.data.UpcomingExamData;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UpcomingAdapter extends ListAdapter<UpcomingData, UpcomingData.UpcomingHolder> {
     private UpcomingViewModel upcomingViewModel;
 
@@ -35,6 +38,8 @@ public class UpcomingAdapter extends ListAdapter<UpcomingData, UpcomingData.Upco
             case 1:
                 return new UpcomingExamData.ExamHolder(
                         inflater.inflate(R.layout.upcoming_exam, parent, false));
+            case 2:
+
         }
         throw new IllegalArgumentException("ViewType is not supported");
     }
