@@ -36,10 +36,4 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration); // Comment if not want Action Bar
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
-
-    // TODO: Implement a way to save data; use the DataStore API
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 }

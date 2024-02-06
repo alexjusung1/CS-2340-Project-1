@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,20 +26,26 @@ import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAdapter.ClassHolder> {
     private ClassHolder currentExpanded;
-    private UpcomingViewModel upcomingViewModel;
+    private final Context listContext;
+    private final UpcomingViewModel upcomingViewModel;
+    private final FragmentManager fragmentManager;
 
-    public UpcomingClassAdapter(UpcomingViewModel upcomingViewModel) {
+    public UpcomingClassAdapter(UpcomingViewModel upcomingViewModel, Context listContext,
+                                FragmentManager fragmentManager) {
         super(DIFF_CALLBACK);
+        this.listContext = listContext;
         this.upcomingViewModel = upcomingViewModel;
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
     @Override
     public ClassHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View upcomingClassView = LayoutInflater.from(parent.getContext())
+        View upcomingClassView = LayoutInflater.from(listContext)
                 .inflate(R.layout.upcoming_class, parent, false);
 
-        ClassHolder holder = new ClassHolder(upcomingClassView, parent.getContext(), upcomingViewModel);
+        ClassHolder holder = new ClassHolder(upcomingClassView, listContext,
+                upcomingViewModel, fragmentManager);
 
         holder.dropdownButton.setOnClickListener(v -> {
             if (currentExpanded != null) {
@@ -72,7 +79,8 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
         boolean expanded = false;
 
         @SuppressLint("WrongViewCast")
-        public ClassHolder(@NonNull View itemView, Context parentContext, UpcomingViewModel upcomingViewModel) {
+        public ClassHolder(@NonNull View itemView, Context parentContext,
+                           UpcomingViewModel upcomingViewModel, FragmentManager fragmentManager) {
             super(itemView);
 
             this.upcomingViewModel = upcomingViewModel;
@@ -95,7 +103,7 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
             animator.setSupportsChangeAnimations(false);
             upcomingList.setItemAnimator(animator);
 
-            adapter = new UpcomingAdapter(upcomingViewModel);
+            adapter = new UpcomingAdapter(upcomingViewModel, parentContext, fragmentManager);
             upcomingList.setAdapter(adapter);
         }
 

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.datastore.core.Serializer;
 
-import com.example.cs2340project1.MyTimeUtils;
+import com.example.cs2340project1.utils.MyTimeUtils;
 
 import java.io.InputStream;
 import java.io.OutputStream;

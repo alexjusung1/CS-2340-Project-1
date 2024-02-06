@@ -40,7 +40,8 @@ public class UpcomingFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         upcomingList.setLayoutManager(layoutManager);
 
-        UpcomingClassAdapter adapter = new UpcomingClassAdapter(upcomingViewModel);
+        UpcomingClassAdapter adapter = new UpcomingClassAdapter(upcomingViewModel,
+                upcomingList.getContext(), getParentFragmentManager());
         upcomingList.setAdapter(adapter);
         upcomingList.addItemDecoration(new MaterialDividerItemDecoration(upcomingList.getContext(),
                 layoutManager.getOrientation()));

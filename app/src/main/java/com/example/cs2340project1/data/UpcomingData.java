@@ -1,9 +1,13 @@
 package com.example.cs2340project1.data;
 
+import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.cs2340project1.ui.upcoming.UpcomingViewModel;
 
 public abstract class UpcomingData {
     protected String title;
@@ -29,12 +33,4 @@ public abstract class UpcomingData {
     }
 
     public abstract int getType();
-
-    public static abstract class UpcomingHolder extends RecyclerView.ViewHolder {
-        public UpcomingHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-
-        public abstract void bind(UpcomingData data);
-    }
 }

@@ -1,51 +1,58 @@
 package com.example.cs2340project1.ui.upcoming;
 
+import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cs2340project1.R;
 import com.example.cs2340project1.data.UpcomingAssignmentData;
 import com.example.cs2340project1.data.UpcomingData;
+import com.example.cs2340project1.data.UpcomingEditData;
 import com.example.cs2340project1.data.UpcomingExamData;
+import com.example.cs2340project1.utils.MyViewHolder;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class UpcomingAdapter extends ListAdapter<UpcomingData, UpcomingData.UpcomingHolder> {
+public class UpcomingAdapter extends ListAdapter<UpcomingData, MyViewHolder> {
+    private Context parentContext;
     private UpcomingViewModel upcomingViewModel;
+    private FragmentManager fragmentManager;
 
-    protected UpcomingAdapter(UpcomingViewModel upcomingViewModel) {
+    protected UpcomingAdapter(UpcomingViewModel upcomingViewModel, Context parentContext,
+                              FragmentManager fragmentManager) {
         super(DIFF_CALLBACK);
         this.upcomingViewModel = upcomingViewModel;
+        this.parentContext = parentContext;
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
     @Override
-    public UpcomingData.UpcomingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         switch (viewType) {
             case 0:
                 return new UpcomingAssignmentData.AssignmentHolder(
-                        inflater.inflate(R.layout.upcoming_assignment, parent, false));
+                        inflater.inflate(R.layout.upcoming_assignment, parent, false),
+                        parentContext, upcomingViewModel);
             case 1:
                 return new UpcomingExamData.ExamHolder(
-                        inflater.inflate(R.layout.upcoming_exam, parent, false));
+                        inflater.inflate(R.layout.upcoming_exam, parent, false),
+                        parentContext, upcomingViewModel);
             case 2:
-
+                return new UpcomingEditData.UpcomingEditHolder(
+                        inflater.inflate(R.layout.upcoming_edit, parent, false),
+                        parentContext, upcomingViewModel, this, fragmentManager);
         }
         throw new IllegalArgumentException("ViewType is not supported");
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UpcomingData.UpcomingHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bind(getItem(position));
     }
 

@@ -1,6 +1,5 @@
 package com.example.cs2340project1.ui.upcoming;
 
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -8,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.cs2340project1.data.ClassData;
 import com.example.cs2340project1.data.UpcomingAssignmentData;
 import com.example.cs2340project1.data.UpcomingData;
+import com.example.cs2340project1.data.UpcomingEditData;
 import com.example.cs2340project1.data.UpcomingExamData;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class UpcomingViewModel extends ViewModel {
 
         ClassData class2 = classDataList.get(1);
         dataList.add(new UpcomingAssignmentData("Assignment 1", class2));
-        dataList.add(new UpcomingAssignmentData("Quiz 1", class2));
+        dataList.add(new UpcomingExamData("Quiz 1", class2));
 
         ClassData class3 = classDataList.get(2);
         dataList.add(new UpcomingAssignmentData("Final Exam", class3));
@@ -66,11 +66,35 @@ public class UpcomingViewModel extends ViewModel {
         return upcomingDataList;
     }
 
+    public void removeUpcomingData(UpcomingData upcomingData) {
+        List<UpcomingData> dataList = upcomingDataList.getValue();
+        dataList.remove(upcomingData);
+        upcomingDataList.setValue(dataList);
+        notifyObserverWithClassData(upcomingData.getAttachedClass());
+    }
+
     public void addUpcomingData(UpcomingData upcomingData) {
         List<UpcomingData> dataList = upcomingDataList.getValue();
         dataList.add(upcomingData);
         // TODO: send query to data layer
         upcomingDataList.setValue(dataList);
         notifyObserverWithClassData(upcomingData.getAttachedClass());
+    }
+
+    public void replaceWithEdit(UpcomingData upcomingData) {
+        List<UpcomingData> dataList = upcomingDataList.getValue();
+        int position = dataList.indexOf(upcomingData);
+        UpcomingEditData editData = new UpcomingEditData(upcomingData);
+        dataList.set(position, editData);
+        upcomingDataList.setValue(dataList);
+        notifyObserverWithClassData(upcomingData.getAttachedClass());
+    }
+
+    public void cancelEdit(UpcomingEditData upcomingEditData) {
+        List<UpcomingData> dataList = upcomingDataList.getValue();
+        int position = dataList.indexOf(upcomingEditData);
+        dataList.set(position, upcomingEditData.getPreviousData());
+        upcomingDataList.setValue(dataList);
+        notifyObserverWithClassData(upcomingEditData.getAttachedClass());
     }
 }

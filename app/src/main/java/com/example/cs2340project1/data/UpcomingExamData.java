@@ -1,12 +1,18 @@
 package com.example.cs2340project1.data;
 
+import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.ListAdapter;
 
-import com.example.cs2340project1.MyTimeUtils;
+import com.example.cs2340project1.utils.MyTimeUtils;
 import com.example.cs2340project1.R;
+import com.example.cs2340project1.ui.upcoming.UpcomingViewModel;
+import com.example.cs2340project1.utils.MyViewHolder;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,6 +25,18 @@ public class UpcomingExamData extends UpcomingData {
 
     public UpcomingExamData(String title, ClassData attachedClass) {
         super(title, attachedClass);
+    }
+
+    public LocalDate getExamDate() {
+        return examDate;
+    }
+
+    public LocalTime getBeginTime() {
+        return beginTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
     public String getLocation() {
@@ -50,24 +68,46 @@ public class UpcomingExamData extends UpcomingData {
         return 1;
     }
 
-    public static class ExamHolder extends UpcomingHolder {
+    public static class ExamHolder extends MyViewHolder {
         final TextView examTitle;
+        final TextView examAttachedClass;
         final TextView examDateTime;
         final TextView examLocation;
+        final Button editButton;
+        final Button deleteButton;
 
-        public ExamHolder(@NonNull View itemView) {
-            super(itemView);
+        public ExamHolder(@NonNull View itemView, Context parentContext,
+                          UpcomingViewModel upcomingViewModel) {
+            super(itemView, parentContext, upcomingViewModel, null, null);
             examTitle = itemView.findViewById(R.id.examTitle);
+            examAttachedClass = itemView.findViewById(R.id.examAttachedClass);
             examDateTime = itemView.findViewById(R.id.examDateTime);
             examLocation = itemView.findViewById(R.id.examLocation);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
+            editButton = itemView.findViewById(R.id.editButton);
         }
 
         @Override
         public void bind(UpcomingData data) {
             UpcomingExamData realData = (UpcomingExamData) data;
             examTitle.setText(realData.getTitle());
+            examAttachedClass.setText(realData.attachedClass.getClassName());
             examDateTime.setText(realData.getDateTimeString());
             examLocation.setText(realData.getLocation());
+            deleteButton.setOnClickListener(view -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(parentContext);
+                builder.setTitle("Delete Exam/Quiz");
+                builder.setMessage("Are you sure you want to delete this exam/quiz?");
+                builder.setPositiveButton("Confirm", (dialog, which) -> {
+                    upcomingViewModel.removeUpcomingData(data);
+                });
+                builder.setNegativeButton(android.R.string.cancel, null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            });
+            editButton.setOnClickListener(view -> {
+                upcomingViewModel.replaceWithEdit(data);
+            });
         }
     }
 }

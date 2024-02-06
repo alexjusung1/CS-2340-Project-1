@@ -1,16 +1,21 @@
 package com.example.cs2340project1.data;
 
+import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.ListAdapter;
 
-import com.example.cs2340project1.MyTimeUtils;
+import com.example.cs2340project1.utils.MyTimeUtils;
 import com.example.cs2340project1.R;
+import com.example.cs2340project1.ui.upcoming.UpcomingViewModel;
+import com.example.cs2340project1.utils.MyViewHolder;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Month;
 
 public class UpcomingAssignmentData extends UpcomingData {
     private LocalDate dueDate = MyTimeUtils.defaultDate;
@@ -18,6 +23,14 @@ public class UpcomingAssignmentData extends UpcomingData {
 
     public UpcomingAssignmentData(String title, ClassData attachedClass) {
         super(title, attachedClass);
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public LocalTime getDueTime() {
+        return dueTime;
     }
 
     public String getDueDateTimeString() {
@@ -28,7 +41,7 @@ public class UpcomingAssignmentData extends UpcomingData {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof UpcomingData) {
+        if (o instanceof UpcomingAssignmentData) {
             UpcomingAssignmentData other = (UpcomingAssignmentData) o;
 
             return super.equals(o) &&
@@ -43,21 +56,43 @@ public class UpcomingAssignmentData extends UpcomingData {
         return 0;
     }
 
-    public static class AssignmentHolder extends UpcomingHolder {
+    public static class AssignmentHolder extends MyViewHolder {
         final TextView assignmentTitle;
+        final TextView assignmentAttachedClass;
         final TextView assignmentDateTime;
+        final Button editButton;
+        final Button deleteButton;
 
-        public AssignmentHolder(@NonNull View itemView) {
-            super(itemView);
+        public AssignmentHolder(@NonNull View itemView, Context parentContext,
+                                UpcomingViewModel upcomingViewModel) {
+            super(itemView, parentContext, upcomingViewModel, null, null);
             assignmentTitle = itemView.findViewById(R.id.assignmentTitle);
+            assignmentAttachedClass = itemView.findViewById(R.id.assignmentAttachedClass);
             assignmentDateTime = itemView.findViewById(R.id.assignmentDateTime);
+            editButton = itemView.findViewById(R.id.editButton);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
 
         @Override
         public void bind(UpcomingData data) {
             UpcomingAssignmentData realData = (UpcomingAssignmentData) data;
             assignmentTitle.setText(realData.title);
+            assignmentAttachedClass.setText(realData.getAttachedClass().getClassName());
             assignmentDateTime.setText(realData.getDueDateTimeString());
+            deleteButton.setOnClickListener(view -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(parentContext);
+                builder.setTitle("Delete Assignment");
+                builder.setMessage("Are you sure you want to delete this assignment?");
+                builder.setPositiveButton("Confirm", (dialog, which) -> {
+                    upcomingViewModel.removeUpcomingData(data);
+                });
+                builder.setNegativeButton(android.R.string.cancel, null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            });
+            editButton.setOnClickListener(view -> {
+                upcomingViewModel.replaceWithEdit(data);
+            });
         }
     }
 }
