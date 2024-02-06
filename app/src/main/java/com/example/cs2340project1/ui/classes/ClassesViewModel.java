@@ -18,6 +18,10 @@ public class ClassesViewModel extends ViewModel {
         List<ClassObj> testList = new ArrayList<>();
         testList.add(new ClassObj("CS 2340", "Pedroguillermo Feijoogarcia",
                 "T Th", "2:00 - 3:15"));
+        testList.add(new ClassObj("CS 1332", "Frederic Faulkner",
+                "M W F", "2:00 - 2:50"));
+        testList.add(new ClassObj("CS 2110", "Dan Forsyth",
+                "M T W Th", "5:00 - 6:15"));
 
         classList = new MutableLiveData<>(testList);
     }
