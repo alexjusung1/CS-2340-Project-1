@@ -23,6 +23,8 @@ public class ToDoFragment extends Fragment {
     private ToDoViewModel toDoViewModel;
     private ToDoAdapter toDoAdapter;
 
+    private EditText toDoEditText;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +37,10 @@ public class ToDoFragment extends Fragment {
 
         // Use the correct IDs
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        EditText toDoEditText = view.findViewById(R.id.toDoEditText);
+        toDoEditText = view.findViewById(R.id.toDoEditText);
         Button addButton = view.findViewById(R.id.addButton);
 
-        toDoAdapter = new ToDoAdapter(requireContext(), toDoViewModel.getTasks(), toDoViewModel);
+        toDoAdapter = new ToDoAdapter(requireContext(), toDoViewModel.getTasks(), toDoViewModel, this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(toDoAdapter);
@@ -54,5 +56,9 @@ public class ToDoFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void setEditText(String text) {
+        toDoEditText.setText(text);
     }
 }
