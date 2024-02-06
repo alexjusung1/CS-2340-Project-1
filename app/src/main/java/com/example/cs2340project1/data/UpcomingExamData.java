@@ -23,7 +23,7 @@ public class UpcomingExamData extends UpcomingData {
     private LocalTime beginTime = MyTimeUtils.defaultBegin;
     private LocalTime endTime = MyTimeUtils.defaultEnd;
 
-    public UpcomingExamData(String title, ClassData attachedClass) {
+    public UpcomingExamData(String title, ClassObj attachedClass) {
         super(title, attachedClass);
     }
 

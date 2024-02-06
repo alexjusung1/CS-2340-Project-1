@@ -117,6 +117,7 @@
                 app:helperText="MM/DD/YYYY">>
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/assignmentDueDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="datetime|date" />
@@ -135,6 +136,7 @@
                 app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/assignmentDueTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"

@@ -76,7 +76,9 @@ public class UpcomingEditData extends UpcomingData {
         final TextInputEditText title;
 
         final TextInputLayout assignmentDueDateContainer;
+        final TextInputEditText assignmentDueDate;
         final TextInputLayout assignmentDueTimeContainer;
+        final TextInputEditText assignmentDueTime;
 
         final TextInputLayout examDateContainer;
         final TextInputEditText examDate;
@@ -97,14 +99,19 @@ public class UpcomingEditData extends UpcomingData {
             title = itemView.findViewById(R.id.upcomingTitle);
 
             assignmentDueDateContainer = itemView.findViewById(R.id.assignmentDueDateContainer);
+            assignmentDueDate = assignmentDueDateContainer.findViewById(R.id.assignmentDueDate);
+
             assignmentDueTimeContainer = itemView.findViewById(R.id.assignmentDueTimeContainer);
+            assignmentDueTime = assignmentDueTimeContainer.findViewById(R.id.assignmentDueTime);
 
             examDateContainer = itemView.findViewById(R.id.examDateContainer);
             examDate = examDateContainer.findViewById(R.id.examDate);
 
             examTimesGroup = itemView.findViewById(R.id.examTimes);
+
             examBeginTimeContainer = examTimesGroup.findViewById(R.id.examBeginTimeContainer);
             examBeginTime = examBeginTimeContainer.findViewById(R.id.examBeginTime);
+
             examEndTimeContainer = examTimesGroup.findViewById(R.id.examEndTimeContainer);
             examEndTime = examEndTimeContainer.findViewById(R.id.examEndTime);
         }

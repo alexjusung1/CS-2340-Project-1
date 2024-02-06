@@ -23,7 +23,6 @@ public class ClassesFragment extends Fragment {
     private FragmentClassesBinding binding;
     private RecyclerView classRecyclerView;
     private ClassesAdapter classesAdapter;
-    private List<ClassObj> classList;
 
     private ClassesViewModel classesViewModel;
 

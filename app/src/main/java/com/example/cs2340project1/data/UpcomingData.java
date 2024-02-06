@@ -11,16 +11,16 @@ import com.example.cs2340project1.ui.upcoming.UpcomingViewModel;
 
 public abstract class UpcomingData {
     protected String title;
-    protected ClassData attachedClass;
+    protected ClassObj attachedClass;
 
-    public UpcomingData(String title, ClassData attachedClass) {
+    public UpcomingData(String title, ClassObj attachedClass) {
         this.title = title;
         this.attachedClass = attachedClass;
     }
 
     public String getTitle() { return title; }
 
-    public ClassData getAttachedClass() { return attachedClass; }
+    public ClassObj getAttachedClass() { return attachedClass; }
 
     @Override
     public boolean equals(Object o) {

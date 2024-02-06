@@ -29,12 +29,10 @@ public class UpcomingFragment extends Fragment {
         ViewModelProvider activityVMProvider = new ViewModelProvider(requireActivity());
         binding = FragmentUpcomingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-/*
+
         ClassesViewModel classesViewModel = activityVMProvider.get(ClassesViewModel.class);
         UpcomingViewModel upcomingViewModel = activityVMProvider.get(UpcomingViewModel.class);
-        //upcomingViewModel.updateClassDataList(classesViewModel.getClassList().getValue());
-
-
+        upcomingViewModel.updateClassDataList(classesViewModel.getClassList().getValue());
 
         RecyclerView upcomingList = binding.upcomingClassList;
 
@@ -51,7 +49,7 @@ public class UpcomingFragment extends Fragment {
         animator.setSupportsChangeAnimations(false);
         upcomingList.setItemAnimator(animator);
 
-        classesViewModel.attachClassListObserver(getViewLifecycleOwner(), adapter::submitList);*/
+        classesViewModel.attachClassListObserver(getViewLifecycleOwner(), adapter::submitList);
 
         return root;
     }

@@ -21,7 +21,7 @@ public class UpcomingAssignmentData extends UpcomingData {
     private LocalDate dueDate = MyTimeUtils.defaultDate;
     private LocalTime dueTime = MyTimeUtils.defaultAssignmentDue;
 
-    public UpcomingAssignmentData(String title, ClassData attachedClass) {
+    public UpcomingAssignmentData(String title, ClassObj attachedClass) {
         super(title, attachedClass);
     }
 

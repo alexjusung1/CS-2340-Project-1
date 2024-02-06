@@ -19,12 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.example.cs2340project1.R;
-import com.example.cs2340project1.data.ClassData;
+import com.example.cs2340project1.data.ClassObj;
 import com.example.cs2340project1.data.UpcomingAssignmentData;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 
-public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAdapter.ClassHolder> {
+public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAdapter.ClassHolder> {
     private ClassHolder currentExpanded;
     private final Context listContext;
     private final UpcomingViewModel upcomingViewModel;
@@ -107,7 +107,7 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
             upcomingList.setAdapter(adapter);
         }
 
-        public void bind(ClassData classData) {
+        public void bind(ClassObj classData) {
             className.setText(classData.getClassName());
             if (expanded) {
                 upcomingList.setVisibility(View.VISIBLE);
@@ -124,14 +124,14 @@ public class UpcomingClassAdapter extends ListAdapter<ClassData, UpcomingClassAd
         }
     }
 
-    public static final DiffUtil.ItemCallback<ClassData> DIFF_CALLBACK = new DiffUtil.ItemCallback<ClassData>() {
+    public static final DiffUtil.ItemCallback<ClassObj> DIFF_CALLBACK = new DiffUtil.ItemCallback<ClassObj>() {
         @Override
-        public boolean areItemsTheSame(@NonNull ClassData oldItem, @NonNull ClassData newItem) {
+        public boolean areItemsTheSame(@NonNull ClassObj oldItem, @NonNull ClassObj newItem) {
             return oldItem == newItem;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull ClassData oldItem, @NonNull ClassData newItem) {
+        public boolean areContentsTheSame(@NonNull ClassObj oldItem, @NonNull ClassObj newItem) {
             return oldItem.equals(newItem);
         }
     };
