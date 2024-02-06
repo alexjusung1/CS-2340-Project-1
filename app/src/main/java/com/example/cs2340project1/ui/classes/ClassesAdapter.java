@@ -54,6 +54,7 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+
     public void deleteItem(int position) {
         ClassObj item = classList.getData().get(position);
         classList.removeIndex(position);

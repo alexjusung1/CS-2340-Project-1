@@ -25,9 +25,11 @@ public class ClassesFragment extends Fragment {
     private ClassesAdapter classesAdapter;
     private List<ClassObj> classList;
 
+    private ClassesViewModel classesViewModel;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ClassesViewModel classesViewModel =
+        classesViewModel =
                 new ViewModelProvider(this).get(ClassesViewModel.class);
 
         binding = FragmentClassesBinding.inflate(inflater, container, false);
@@ -44,11 +46,7 @@ public class ClassesFragment extends Fragment {
 
         classesAdapter.setViewModel(classesViewModel);
 
-        classList = new ArrayList<ClassObj>();
-        classList.add(new ClassObj("CS 2340", "Pedroguillermo Feijoogarcia",
-                "T Th", "2:00 - 3:15"));
 
-        classesAdapter.setClasses(classList);
 //        final TextView textView = binding.textHome;
 //        classesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
@@ -67,11 +65,11 @@ public class ClassesFragment extends Fragment {
         binding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                classList.add(new ClassObj(binding.classNameField.getText().toString(),
+                classesViewModel.addClass(new ClassObj(binding.classNameField.getText().toString(),
                         binding.classInstructorField.getText().toString(),
                         binding.classDaysField.getText().toString(),
                         binding.classTimeField.getText().toString()));
-                classesAdapter.setClasses(classList);
+                classesAdapter.notifyDataSetChanged();
                 binding.classNameField.setText("");
                 binding.classInstructorField.setText("");
                 binding.classDaysField.setText("");
