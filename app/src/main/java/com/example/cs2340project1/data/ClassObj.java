@@ -1,15 +1,4 @@
-package com.example.cs2340project1.ui.classes;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.datastore.core.Serializer;
-
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.EnumSet;
-import java.util.stream.Collectors;
+package com.example.cs2340project1.data;
 
 
 public class ClassObj {
@@ -60,8 +49,8 @@ public class ClassObj {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof com.example.cs2340project1.ui.classes.ClassObj) {
-            com.example.cs2340project1.ui.classes.ClassObj otherClass = (com.example.cs2340project1.ui.classes.ClassObj) o;
+        if (o instanceof ClassObj) {
+            ClassObj otherClass = (ClassObj) o;
             return className.equals(otherClass.getClassName())
                     && instructorName.equals(otherClass.getInstructorName())
                     && classDays.equals(otherClass.getDays())

@@ -2,13 +2,13 @@ package com.example.cs2340project1.ui.classes;
 
 
 import com.example.cs2340project1.R;
+import com.example.cs2340project1.data.ClassObj;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHolder>{
-    private List<ClassObj> classList;
+    private ClassesViewModel classList;
     private ClassesFragment classesFragment;
 
     public ClassesAdapter(ClassesFragment frag) {
@@ -29,16 +29,20 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
         return new ViewHolder(itemView);
     }
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ClassObj item = classList.get(position);
+        ClassObj item = classList.getData().get(position);
         holder.name.setText(item.getClassName());
         holder.instructor.setText(item.getInstructorName());
         holder.days.setText(item.getDays());
         holder.time.setText(item.getTime());
     }
 
+    public void setViewModel(ClassesViewModel c) {
+        classList = c;
+    }
+
     @Override
     public int getItemCount() {
-        return classList.size();
+        return classList.getData().size();
     }
 
     public Context getContext() {
@@ -46,18 +50,18 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
     }
 
     public void setClasses(List<ClassObj> classes) {
-        classList = classes;
+        classList.setClassList(classes);
         notifyDataSetChanged();
     }
 
     public void deleteItem(int position) {
-        ClassObj item = classList.get(position);
-        classList.remove(position);
+        ClassObj item = classList.getData().get(position);
+        classList.removeIndex(position);
         notifyItemRemoved(position);
     }
 
     public void editItem(int position) {
-        ClassObj item = classList.get(position);
+        ClassObj item = classList.getData().get(position);
         Bundle bundle = new Bundle();
         bundle.putString("className", item.getClassName());
         bundle.putString("instructorName", item.getInstructorName());

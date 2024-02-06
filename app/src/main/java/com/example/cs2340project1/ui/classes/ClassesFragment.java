@@ -1,21 +1,18 @@
 package com.example.cs2340project1.ui.classes;
 
 import android.os.Bundle;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cs2340project1.data.ClassObj;
 import com.example.cs2340project1.databinding.FragmentClassesBinding;
 
 import java.util.ArrayList;
@@ -44,6 +41,8 @@ public class ClassesFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new RecyclerClassTouchHelper(classesAdapter));
         itemTouchHelper.attachToRecyclerView(classRecyclerView);
+
+        classesAdapter.setViewModel(classesViewModel);
 
         classList = new ArrayList<ClassObj>();
         classList.add(new ClassObj("CS 2340", "Pedroguillermo Feijoogarcia",

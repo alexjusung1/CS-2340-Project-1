@@ -5,42 +5,54 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-import com.example.cs2340project1.data.ClassData;
+import com.example.cs2340project1.data.ClassObj;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class ClassesViewModel extends ViewModel {
-    private final MutableLiveData<List<ClassData>> classList;
+    private final MutableLiveData<List<ClassObj>> classList;
 
     public ClassesViewModel() {
-        List<ClassData> testList = new ArrayList<>();
-        testList.add(new ClassData.Builder().className("Class 1").build());
-        testList.add(new ClassData.Builder().className("Class 2").build());
-        testList.add(new ClassData.Builder().className("Class 3").build());
-        testList.add(new ClassData.Builder().className("Class 4").build());
+        List<ClassObj> testList = new ArrayList<>();
+        testList.add(new ClassObj("CS 2340", "Pedroguillermo Feijoogarcia",
+                "T Th", "2:00 - 3:15"));
 
         classList = new MutableLiveData<>(testList);
     }
 
-    public MutableLiveData<List<ClassData>> getClassList() {
+    public MutableLiveData<List<ClassObj>> getClassList() {
         return classList;
     }
 
-    public void attachClassListObserver(LifecycleOwner owner, Observer<List<ClassData>> observer) {
+    public List<ClassObj> getData() {
+        return classList.getValue();
+    }
+
+    public void attachClassListObserver(LifecycleOwner owner, Observer<List<ClassObj>> observer) {
         classList.observe(owner, observer);
     }
 
-    public void addClass(ClassData data) {
-        List<ClassData> list = classList.getValue();
+    public void setClassList(List<ClassObj> cl) {
+        classList.setValue(cl);
+    }
+
+    public void addClass(ClassObj data) {
+        List<ClassObj> list = classList.getValue();
         list.add(data);
         classList.setValue(list);
     }
 
-    public void removeClass(ClassData data) {
-        List<ClassData> list = classList.getValue();
+    public void removeClass(ClassObj data) {
+        List<ClassObj> list = classList.getValue();
         list.remove(data);
+        classList.setValue(list);
+    }
+
+    public void removeIndex(int pos) {
+        List<ClassObj> list = classList.getValue();
+        list.remove(pos);
         classList.setValue(list);
     }
 
@@ -49,10 +61,10 @@ public class ClassesViewModel extends ViewModel {
      * @param className name of class to remove
      * @return classData object that was removed
      */
-    public ClassData removeClass(String className) {
-        List<ClassData> list = classList.getValue();
-        ClassData ret = null;
-        for (ClassData data : list) {
+    public ClassObj removeClass(String className) {
+        List<ClassObj> list = classList.getValue();
+        ClassObj ret = null;
+        for (ClassObj data : list) {
             if (data.getClassName().equals(className)) {
                 ret = data;
             }
