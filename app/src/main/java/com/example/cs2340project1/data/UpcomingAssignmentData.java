@@ -14,6 +14,7 @@ import com.example.cs2340project1.ui.upcoming.UpcomingViewModel;
 import com.example.cs2340project1.utils.MyViewHolder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class UpcomingAssignmentData extends UpcomingData {
@@ -60,6 +61,12 @@ public class UpcomingAssignmentData extends UpcomingData {
     @Override
     public int getType() {
         return 0;
+    }
+
+    @NonNull
+    @Override
+    public LocalDateTime getRepresentativeDate() {
+        return LocalDateTime.of(dueDate, dueTime);
     }
 
     public static class AssignmentHolder extends MyViewHolder {

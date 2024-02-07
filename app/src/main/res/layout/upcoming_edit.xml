@@ -115,7 +115,7 @@
                 app:endIconCheckable="false"
                 app:endIconDrawable="@drawable/round_calendar_today_24"
                 app:endIconMode="custom"
-                app:helperText="MM/DD/YYYY">>
+                app:helperText="MM/DD/YYYY">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/assignmentDueDate"

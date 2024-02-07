@@ -27,6 +27,7 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 
@@ -67,6 +68,12 @@ public class UpcomingEditData extends UpcomingData {
     @Override
     public int getType() {
         return 2;
+    }
+
+    @NonNull
+    @Override
+    public LocalDateTime getRepresentativeDate() {
+        return previousData.getRepresentativeDate();
     }
 
     public UpcomingData getPreviousData() {

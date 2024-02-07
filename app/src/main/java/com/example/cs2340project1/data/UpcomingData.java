@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cs2340project1.ui.upcoming.UpcomingViewModel;
 
+import java.time.LocalDateTime;
+
 public abstract class UpcomingData {
     protected String title;
     protected ClassObj attachedClass;
@@ -33,4 +35,6 @@ public abstract class UpcomingData {
     }
 
     public abstract int getType();
+
+    public abstract LocalDateTime getRepresentativeDate();
 }

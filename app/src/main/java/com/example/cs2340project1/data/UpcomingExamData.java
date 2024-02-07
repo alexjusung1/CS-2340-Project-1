@@ -14,6 +14,7 @@ import com.example.cs2340project1.ui.upcoming.UpcomingViewModel;
 import com.example.cs2340project1.utils.MyViewHolder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class UpcomingExamData extends UpcomingData {
@@ -76,6 +77,12 @@ public class UpcomingExamData extends UpcomingData {
         return 1;
     }
 
+    @NonNull
+    @Override
+    public LocalDateTime getRepresentativeDate() {
+        return LocalDateTime.of(examDate, beginTime);
+    }
+
     public static class ExamHolder extends MyViewHolder {
         final TextView examTitle;
         final TextView examAttachedClass;
@@ -106,9 +113,8 @@ public class UpcomingExamData extends UpcomingData {
                 AlertDialog.Builder builder = new AlertDialog.Builder(parentContext);
                 builder.setTitle("Delete Exam/Quiz");
                 builder.setMessage("Are you sure you want to delete this exam/quiz?");
-                builder.setPositiveButton("Confirm", (dialog, which) -> {
-                    upcomingViewModel.removeUpcomingData(data);
-                });
+                builder.setPositiveButton("Confirm",
+                        (dialog, which) -> upcomingViewModel.removeUpcomingData(data));
                 builder.setNegativeButton(android.R.string.cancel, null);
                 AlertDialog dialog = builder.create();
                 dialog.show();

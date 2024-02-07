@@ -118,10 +118,8 @@ public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAda
                 upcomingList.setVisibility(View.VISIBLE);
                 addButton.setVisibility(View.VISIBLE);
                 upcomingViewModel.attachClassUpcomingObserver(classData, adapter::submitList);
-                addButton.setOnClickListener(view -> {
-                    upcomingViewModel.addUpcomingData(new UpcomingAssignmentData("New Assignment",
-                            classData));
-                });
+                addButton.setOnClickListener(view -> upcomingViewModel.addUpcomingData(
+                        new UpcomingAssignmentData("New Assignment", classData)));
             } else {
                 upcomingList.setVisibility(View.GONE);
                 addButton.setVisibility(View.GONE);

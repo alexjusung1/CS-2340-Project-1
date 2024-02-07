@@ -2,7 +2,7 @@
 <resources>
     <string-array name="upcoming_sort_by">
         <item>Class</item>
-        <item>Due Date</item>
+        <item>Date</item>
     </string-array>
 
     <string-array name="test_classes">

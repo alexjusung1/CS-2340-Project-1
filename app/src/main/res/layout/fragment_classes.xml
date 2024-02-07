@@ -6,49 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".ui.classes.ClassesFragment">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/classNameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Name" />
+
+        <EditText
+            android:id="@+id/classTimeField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Time" />
+
+        <EditText
+            android:id="@+id/classDaysField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Days" />
+
+        <EditText
+            android:id="@+id/classInstructorField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Instructor" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/classList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addButton" />
-
-    <EditText
-        android:id="@+id/classNameField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Class Name"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/classTimeField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Class Time"
-        app:layout_constraintTop_toBottomOf="@+id/classNameField" />
-
-    <EditText
-        android:id="@+id/classDaysField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Class Days"
-        app:layout_constraintTop_toBottomOf="@+id/classTimeField" />
-
-    <EditText
-        android:id="@+id/classInstructorField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Class Instructor"
-        app:layout_constraintTop_toBottomOf="@+id/classDaysField" />
 
     <Button
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Add Class"
-        app:layout_constraintTop_toBottomOf="@+id/classInstructorField"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

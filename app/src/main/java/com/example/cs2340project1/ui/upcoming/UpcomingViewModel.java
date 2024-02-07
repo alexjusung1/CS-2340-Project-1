@@ -1,5 +1,6 @@
 package com.example.cs2340project1.ui.upcoming;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -18,7 +19,10 @@ import java.util.stream.Collectors;
 
 public class UpcomingViewModel extends ViewModel {
     private final MutableLiveData<List<UpcomingData>> upcomingDataList;
-    private Map<ClassObj, Observer<List<UpcomingData>>> classToUpcomingObservers;
+    private final Map<ClassObj, Observer<List<UpcomingData>>> classToUpcomingObservers;
+    private final MutableLiveData<Integer> sortType;
+    public static final int CLASS_SORT = 0;
+    public static final int DATE_SORT = 1;
 
     public UpcomingViewModel(MutableLiveData<List<ClassObj>> mutableClassList) {
         List<ClassObj> classDataList = mutableClassList.getValue();
@@ -40,6 +44,7 @@ public class UpcomingViewModel extends ViewModel {
 
         upcomingDataList = new MutableLiveData<>(dataList);
         classToUpcomingObservers = new HashMap<>();
+        sortType = new MutableLiveData<>(CLASS_SORT);
 
         mutableClassList.observeForever(list -> {
             List<UpcomingData> classDataListOld = upcomingDataList.getValue();
@@ -49,9 +54,25 @@ public class UpcomingViewModel extends ViewModel {
         });
     }
 
+    public void attachUpcomingObserver(LifecycleOwner lifecycleOwner, Observer<List<UpcomingData>> observer) {
+        upcomingDataList.observe(lifecycleOwner, observer);
+    }
+
     public void attachClassUpcomingObserver(ClassObj classData, Observer<List<UpcomingData>> observer) {
         classToUpcomingObservers.put(classData, observer);
         notifyObserverWithClassData(classData);
+    }
+
+    public void updateSortType(int sortType) {
+        this.sortType.setValue(sortType);
+    }
+
+    public int getSortType() {
+        return sortType.getValue();
+    }
+
+    public void attachToSortType(LifecycleOwner lifecycleOwner, Observer<Integer> observer) {
+        sortType.observe(lifecycleOwner, observer);
     }
 
     private void notifyObserverWithClassData(ClassObj classData) {
