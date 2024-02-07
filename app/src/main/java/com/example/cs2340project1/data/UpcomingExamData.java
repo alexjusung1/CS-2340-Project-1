@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.cs2340project1.utils.MyTimeUtils;
 import com.example.cs2340project1.R;
@@ -25,6 +24,15 @@ public class UpcomingExamData extends UpcomingData {
 
     public UpcomingExamData(String title, ClassObj attachedClass) {
         super(title, attachedClass);
+    }
+
+    public UpcomingExamData(String title, ClassObj attachedClass, String location,
+                            LocalDate examDate, LocalTime beginTime, LocalTime endTime) {
+        this(title, attachedClass);
+        this.location = location;
+        this.examDate = examDate;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
     }
 
     public LocalDate getExamDate() {
@@ -78,7 +86,7 @@ public class UpcomingExamData extends UpcomingData {
 
         public ExamHolder(@NonNull View itemView, Context parentContext,
                           UpcomingViewModel upcomingViewModel) {
-            super(itemView, parentContext, upcomingViewModel, null, null);
+            super(itemView, parentContext, upcomingViewModel, null, null, null);
             examTitle = itemView.findViewById(R.id.examTitle);
             examAttachedClass = itemView.findViewById(R.id.examAttachedClass);
             examDateTime = itemView.findViewById(R.id.examDateTime);

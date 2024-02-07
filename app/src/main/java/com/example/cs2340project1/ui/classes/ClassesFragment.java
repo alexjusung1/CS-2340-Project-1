@@ -15,9 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cs2340project1.data.ClassObj;
 import com.example.cs2340project1.databinding.FragmentClassesBinding;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ClassesFragment extends Fragment {
 
     private FragmentClassesBinding binding;
@@ -29,7 +26,7 @@ public class ClassesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         classesViewModel =
-                new ViewModelProvider(this).get(ClassesViewModel.class);
+                new ViewModelProvider(requireActivity()).get(ClassesViewModel.class);
 
         binding = FragmentClassesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

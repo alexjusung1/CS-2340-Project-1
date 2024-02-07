@@ -8,25 +8,32 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cs2340project1.R;
 import com.example.cs2340project1.data.UpcomingAssignmentData;
 import com.example.cs2340project1.data.UpcomingData;
 import com.example.cs2340project1.data.UpcomingEditData;
 import com.example.cs2340project1.data.UpcomingExamData;
+import com.example.cs2340project1.ui.classes.ClassesViewModel;
 import com.example.cs2340project1.utils.MyViewHolder;
 
 public class UpcomingAdapter extends ListAdapter<UpcomingData, MyViewHolder> {
     private Context parentContext;
     private UpcomingViewModel upcomingViewModel;
+    private ClassesViewModel classesViewModel;
     private FragmentManager fragmentManager;
+    private RecyclerView recyclerView;
 
-    protected UpcomingAdapter(UpcomingViewModel upcomingViewModel, Context parentContext,
-                              FragmentManager fragmentManager) {
+    protected UpcomingAdapter(Context parentContext, UpcomingViewModel upcomingViewModel,
+                              ClassesViewModel classesViewModel, FragmentManager fragmentManager,
+                              RecyclerView recyclerView) {
         super(DIFF_CALLBACK);
-        this.upcomingViewModel = upcomingViewModel;
         this.parentContext = parentContext;
+        this.upcomingViewModel = upcomingViewModel;
+        this.classesViewModel = classesViewModel;
         this.fragmentManager = fragmentManager;
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
@@ -46,7 +53,8 @@ public class UpcomingAdapter extends ListAdapter<UpcomingData, MyViewHolder> {
             case 2:
                 return new UpcomingEditData.UpcomingEditHolder(
                         inflater.inflate(R.layout.upcoming_edit, parent, false),
-                        parentContext, upcomingViewModel, this, fragmentManager);
+                        parentContext, upcomingViewModel, classesViewModel, recyclerView,
+                        fragmentManager);
         }
         throw new IllegalArgumentException("ViewType is not supported");
     }

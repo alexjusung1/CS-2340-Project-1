@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import com.example.cs2340project1.R;
 import com.example.cs2340project1.data.ClassObj;
 import com.example.cs2340project1.data.UpcomingAssignmentData;
+import com.example.cs2340project1.ui.classes.ClassesViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 
@@ -28,13 +29,15 @@ public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAda
     private ClassHolder currentExpanded;
     private final Context listContext;
     private final UpcomingViewModel upcomingViewModel;
+    private final ClassesViewModel classesViewModel;
     private final FragmentManager fragmentManager;
 
     public UpcomingClassAdapter(UpcomingViewModel upcomingViewModel, Context listContext,
-                                FragmentManager fragmentManager) {
+                                ClassesViewModel classesViewModel, FragmentManager fragmentManager) {
         super(DIFF_CALLBACK);
         this.listContext = listContext;
         this.upcomingViewModel = upcomingViewModel;
+        this.classesViewModel = classesViewModel;
         this.fragmentManager = fragmentManager;
     }
 
@@ -45,7 +48,7 @@ public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAda
                 .inflate(R.layout.upcoming_class, parent, false);
 
         ClassHolder holder = new ClassHolder(upcomingClassView, listContext,
-                upcomingViewModel, fragmentManager);
+                upcomingViewModel, classesViewModel, fragmentManager);
 
         holder.dropdownButton.setOnClickListener(v -> {
             if (currentExpanded != null) {
@@ -80,7 +83,8 @@ public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAda
 
         @SuppressLint("WrongViewCast")
         public ClassHolder(@NonNull View itemView, Context parentContext,
-                           UpcomingViewModel upcomingViewModel, FragmentManager fragmentManager) {
+                           UpcomingViewModel upcomingViewModel, ClassesViewModel classesViewModel,
+                           FragmentManager fragmentManager) {
             super(itemView);
 
             this.upcomingViewModel = upcomingViewModel;
@@ -103,7 +107,8 @@ public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAda
             animator.setSupportsChangeAnimations(false);
             upcomingList.setItemAnimator(animator);
 
-            adapter = new UpcomingAdapter(upcomingViewModel, parentContext, fragmentManager);
+            adapter = new UpcomingAdapter(parentContext, upcomingViewModel, classesViewModel,
+                    fragmentManager, upcomingList);
             upcomingList.setAdapter(adapter);
         }
 
@@ -111,8 +116,8 @@ public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAda
             className.setText(classData.getClassName());
             if (expanded) {
                 upcomingList.setVisibility(View.VISIBLE);
-                upcomingViewModel.attachClassUpcomingObserver(classData, adapter::submitList);
                 addButton.setVisibility(View.VISIBLE);
+                upcomingViewModel.attachClassUpcomingObserver(classData, adapter::submitList);
                 addButton.setOnClickListener(view -> {
                     upcomingViewModel.addUpcomingData(new UpcomingAssignmentData("New Assignment",
                             classData));

@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.cs2340project1.utils.MyTimeUtils;
 import com.example.cs2340project1.R;
@@ -23,6 +22,13 @@ public class UpcomingAssignmentData extends UpcomingData {
 
     public UpcomingAssignmentData(String title, ClassObj attachedClass) {
         super(title, attachedClass);
+    }
+
+    public UpcomingAssignmentData(String title, ClassObj attachedClass,
+                                  LocalDate dueDate, LocalTime dueTime) {
+        this(title, attachedClass);
+        this.dueDate = dueDate;
+        this.dueTime = dueTime;
     }
 
     public LocalDate getDueDate() {
@@ -65,7 +71,7 @@ public class UpcomingAssignmentData extends UpcomingData {
 
         public AssignmentHolder(@NonNull View itemView, Context parentContext,
                                 UpcomingViewModel upcomingViewModel) {
-            super(itemView, parentContext, upcomingViewModel, null, null);
+            super(itemView, parentContext, upcomingViewModel, null, null, null);
             assignmentTitle = itemView.findViewById(R.id.assignmentTitle);
             assignmentAttachedClass = itemView.findViewById(R.id.assignmentAttachedClass);
             assignmentDateTime = itemView.findViewById(R.id.assignmentDateTime);

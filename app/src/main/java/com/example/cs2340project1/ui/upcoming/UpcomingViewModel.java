@@ -20,20 +20,11 @@ public class UpcomingViewModel extends ViewModel {
     private final MutableLiveData<List<UpcomingData>> upcomingDataList;
     private Map<ClassObj, Observer<List<UpcomingData>>> classToUpcomingObservers;
 
-    public UpcomingViewModel() {
+    public UpcomingViewModel(MutableLiveData<List<ClassObj>> mutableClassList) {
+        List<ClassObj> classDataList = mutableClassList.getValue();
+        assert classDataList.size() >= 3;
+
         List<UpcomingData> dataList = new ArrayList<>();
-        upcomingDataList = new MutableLiveData<>(dataList);
-        classToUpcomingObservers = new HashMap<>();
-    }
-
-    // Temporary; to test functionality
-    public void updateClassDataList(List<ClassObj> classDataList) {
-        if (classToUpcomingObservers.size() > 0) {
-            return;
-        }
-
-        List<UpcomingData> dataList = upcomingDataList.getValue();
-
         ClassObj class1 = classDataList.get(0);
         dataList.add(new UpcomingAssignmentData("Assignment 1", class1));
         dataList.add(new UpcomingAssignmentData("Assignment 2", class1));
@@ -47,7 +38,15 @@ public class UpcomingViewModel extends ViewModel {
         ClassObj class3 = classDataList.get(2);
         dataList.add(new UpcomingAssignmentData("Final Exam", class3));
 
-        upcomingDataList.setValue(dataList);
+        upcomingDataList = new MutableLiveData<>(dataList);
+        classToUpcomingObservers = new HashMap<>();
+
+        mutableClassList.observeForever(list -> {
+            List<UpcomingData> classDataListOld = upcomingDataList.getValue();
+            upcomingDataList.setValue(classDataListOld.stream()
+                    .filter(upcomingData -> list.contains(upcomingData.getAttachedClass()))
+                    .collect(Collectors.toList()));
+        });
     }
 
     public void attachClassUpcomingObserver(ClassObj classData, Observer<List<UpcomingData>> observer) {
@@ -57,6 +56,7 @@ public class UpcomingViewModel extends ViewModel {
 
     private void notifyObserverWithClassData(ClassObj classData) {
         Observer<List<UpcomingData>> targetObserver = classToUpcomingObservers.get(classData);
+        if (targetObserver == null) return;
         targetObserver.onChanged(upcomingDataList.getValue().stream()
                 .filter(upcomingData -> upcomingData.getAttachedClass() == classData)
                 .collect(Collectors.toList()));
@@ -96,5 +96,17 @@ public class UpcomingViewModel extends ViewModel {
         dataList.set(position, upcomingEditData.getPreviousData());
         upcomingDataList.setValue(dataList);
         notifyObserverWithClassData(upcomingEditData.getAttachedClass());
+    }
+
+    public void confirmEdit(UpcomingEditData upcomingEditData) {
+        List<UpcomingData> dataList = upcomingDataList.getValue();
+        int position = dataList.indexOf(upcomingEditData);
+        UpcomingData newData = upcomingEditData.confirmEdit();
+        dataList.set(position, newData);
+        upcomingDataList.setValue(dataList);
+        notifyObserverWithClassData(newData.getAttachedClass());
+        if (upcomingEditData.getPreviousData().getAttachedClass() != newData.getAttachedClass()) {
+            notifyObserverWithClassData(upcomingEditData.getPreviousData().getAttachedClass());
+        }
     }
 }

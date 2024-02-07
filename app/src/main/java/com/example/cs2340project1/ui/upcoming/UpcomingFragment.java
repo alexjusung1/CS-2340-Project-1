@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,13 +27,19 @@ public class UpcomingFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ViewModelProvider activityVMProvider = new ViewModelProvider(requireActivity());
         binding = FragmentUpcomingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        ClassesViewModel classesViewModel = activityVMProvider.get(ClassesViewModel.class);
-        UpcomingViewModel upcomingViewModel = activityVMProvider.get(UpcomingViewModel.class);
-        upcomingViewModel.updateClassDataList(classesViewModel.getClassList().getValue());
+        ClassesViewModel classesViewModel = new ViewModelProvider(requireActivity()).get(ClassesViewModel.class);
+        ViewModelProvider.Factory factory = new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new UpcomingViewModel(classesViewModel.getClassList());
+            }
+        };
+        UpcomingViewModel upcomingViewModel = new ViewModelProvider(requireActivity(), factory)
+                .get(UpcomingViewModel.class);
 
         RecyclerView upcomingList = binding.upcomingClassList;
 
@@ -40,7 +47,7 @@ public class UpcomingFragment extends Fragment {
         upcomingList.setLayoutManager(layoutManager);
 
         UpcomingClassAdapter adapter = new UpcomingClassAdapter(upcomingViewModel,
-                upcomingList.getContext(), getParentFragmentManager());
+                upcomingList.getContext(), classesViewModel, getParentFragmentManager());
         upcomingList.setAdapter(adapter);
         upcomingList.addItemDecoration(new MaterialDividerItemDecoration(upcomingList.getContext(),
                 layoutManager.getOrientation()));
