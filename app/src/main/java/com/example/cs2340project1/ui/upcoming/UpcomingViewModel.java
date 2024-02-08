@@ -21,6 +21,7 @@ public class UpcomingViewModel extends ViewModel {
     private final MutableLiveData<List<UpcomingData>> upcomingDataList;
     private final Map<ClassObj, Observer<List<UpcomingData>>> classToUpcomingObservers;
     private final MutableLiveData<Integer> sortType;
+    private ClassObj expandedClass = null;
     public static final int CLASS_SORT = 0;
     public static final int DATE_SORT = 1;
 
@@ -51,6 +52,10 @@ public class UpcomingViewModel extends ViewModel {
             upcomingDataList.setValue(classDataListOld.stream()
                     .filter(upcomingData -> list.contains(upcomingData.getAttachedClass()))
                     .collect(Collectors.toList()));
+
+            if (!list.contains(expandedClass)) {
+                expandedClass = null;
+            }
         });
     }
 
@@ -85,6 +90,14 @@ public class UpcomingViewModel extends ViewModel {
 
     public MutableLiveData<List<UpcomingData>> getUpcomingDataList() {
         return upcomingDataList;
+    }
+
+    public ClassObj getExpandedClass() {
+        return expandedClass;
+    }
+
+    public void setExpandedClass(ClassObj expandedClass) {
+        this.expandedClass = expandedClass;
     }
 
     public void removeUpcomingData(UpcomingData upcomingData) {

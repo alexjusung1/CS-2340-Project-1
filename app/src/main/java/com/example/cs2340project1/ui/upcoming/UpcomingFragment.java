@@ -70,7 +70,7 @@ public class UpcomingFragment extends Fragment {
         upcomingList.setItemAnimator(animator);
 
         UpcomingClassAdapter classAdapter = new UpcomingClassAdapter(upcomingViewModel,
-                upcomingList.getContext(), classesViewModel, getParentFragmentManager());
+                upcomingList.getContext(), classesViewModel, getParentFragmentManager(), upcomingList);
         MaterialDividerItemDecoration classDecoration = new MaterialDividerItemDecoration(upcomingList.getContext(),
                 layoutManager.getOrientation());
 

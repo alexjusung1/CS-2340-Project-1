@@ -19,11 +19,11 @@ import com.example.cs2340project1.ui.classes.ClassesViewModel;
 import com.example.cs2340project1.utils.MyViewHolder;
 
 public class UpcomingAdapter extends ListAdapter<UpcomingData, MyViewHolder> {
-    private Context listContext;
-    private UpcomingViewModel upcomingViewModel;
-    private ClassesViewModel classesViewModel;
-    private FragmentManager fragmentManager;
-    private RecyclerView recyclerView;
+    private final Context listContext;
+    private final UpcomingViewModel upcomingViewModel;
+    private final ClassesViewModel classesViewModel;
+    private final FragmentManager fragmentManager;
+    private final RecyclerView recyclerView;
 
     protected UpcomingAdapter(Context listContext, UpcomingViewModel upcomingViewModel,
                               ClassesViewModel classesViewModel, FragmentManager fragmentManager,

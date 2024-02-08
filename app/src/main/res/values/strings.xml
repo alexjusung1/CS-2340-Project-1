@@ -1,10 +1,9 @@
 <resources>
-    <string name="app_name">CS 2340 Project 1</string>
+    <string name="app_name">Class Scheduler</string>
     <string name="title_classes">Classes</string>
     <string name="title_upcoming">Upcoming</string>
     <string name="title_to_do">To Do</string>
     <string name="sort_by">Sort by</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_hint">Title</string>
 </resources>

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ToDoViewModel extends ViewModel {
-    private List<Task> tasks = new ArrayList<>();;
+    private List<Task> tasks = new ArrayList<>();
 
     public List<Task> getTasks() {
         return tasks;

@@ -26,19 +26,21 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAdapter.ClassHolder> {
-    private ClassHolder currentExpanded;
     private final Context listContext;
     private final UpcomingViewModel upcomingViewModel;
     private final ClassesViewModel classesViewModel;
     private final FragmentManager fragmentManager;
+    private final RecyclerView recyclerView;
 
     public UpcomingClassAdapter(UpcomingViewModel upcomingViewModel, Context listContext,
-                                ClassesViewModel classesViewModel, FragmentManager fragmentManager) {
+                                ClassesViewModel classesViewModel, FragmentManager fragmentManager,
+                                RecyclerView recyclerView) {
         super(DIFF_CALLBACK);
         this.listContext = listContext;
         this.upcomingViewModel = upcomingViewModel;
         this.classesViewModel = classesViewModel;
         this.fragmentManager = fragmentManager;
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
@@ -47,24 +49,8 @@ public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAda
         View upcomingClassView = LayoutInflater.from(listContext)
                 .inflate(R.layout.upcoming_class, parent, false);
 
-        ClassHolder holder = new ClassHolder(upcomingClassView, listContext,
-                upcomingViewModel, classesViewModel, fragmentManager);
-
-        holder.dropdownButton.setOnClickListener(v -> {
-            if (currentExpanded != null) {
-                currentExpanded.expanded = false;
-                notifyItemChanged(currentExpanded.getAdapterPosition());
-            }
-            if (currentExpanded != holder) {
-                currentExpanded = holder;
-                holder.expanded = true;
-                notifyItemChanged(holder.getAdapterPosition());
-            } else {
-                currentExpanded = null;
-            }
-        });
-
-        return holder;
+        return new ClassHolder(upcomingClassView, listContext,
+                upcomingViewModel, classesViewModel, fragmentManager, recyclerView, this);
     }
 
     @Override
@@ -79,12 +65,14 @@ public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAda
         final MaterialButton addButton;
         final RecyclerView upcomingList;
         final UpcomingAdapter adapter;
-        boolean expanded = false;
+        final RecyclerView parentRecyclerView;
+        final UpcomingClassAdapter upcomingClassAdapter;
 
         @SuppressLint("WrongViewCast")
         public ClassHolder(@NonNull View itemView, Context parentContext,
                            UpcomingViewModel upcomingViewModel, ClassesViewModel classesViewModel,
-                           FragmentManager fragmentManager) {
+                           FragmentManager fragmentManager, RecyclerView recyclerView,
+                           UpcomingClassAdapter upcomingClassAdapter) {
             super(itemView);
 
             this.upcomingViewModel = upcomingViewModel;
@@ -110,11 +98,30 @@ public class UpcomingClassAdapter extends ListAdapter<ClassObj, UpcomingClassAda
             adapter = new UpcomingAdapter(parentContext, upcomingViewModel, classesViewModel,
                     fragmentManager, upcomingList);
             upcomingList.setAdapter(adapter);
+
+            parentRecyclerView = recyclerView;
+
+            this.upcomingClassAdapter = upcomingClassAdapter;
         }
 
         public void bind(ClassObj classData) {
             className.setText(classData.getClassName());
-            if (expanded) {
+            dropdownButton.setOnClickListener(view -> parentRecyclerView.post(() -> {
+                ClassObj expandedClass = upcomingViewModel.getExpandedClass();
+                if (expandedClass != null) {
+                    upcomingViewModel.setExpandedClass(null);
+                    int position = upcomingClassAdapter.getCurrentList().indexOf(expandedClass);
+                    upcomingClassAdapter.notifyItemChanged(position);
+                }
+                if (expandedClass != classData) {
+                    upcomingViewModel.setExpandedClass(classData);
+                } else {
+                    upcomingViewModel.setExpandedClass(null);
+                }
+                upcomingClassAdapter.notifyItemChanged(getAdapterPosition());
+            }));
+
+            if (upcomingViewModel.getExpandedClass() == classData) {
                 upcomingList.setVisibility(View.VISIBLE);
                 addButton.setVisibility(View.VISIBLE);
                 upcomingViewModel.attachClassUpcomingObserver(classData, adapter::submitList);
